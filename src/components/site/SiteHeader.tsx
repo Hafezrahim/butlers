@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { TopBar } from "./TopBar";
 
 export const NAV_LINKS = [
   { to: "/", label: "Home" },
@@ -19,6 +20,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 ink-panel border-b border-white/10 backdrop-blur">
+      <TopBar />
       <div className="container-site flex h-20 items-center justify-between gap-6">
         <Link to="/" className="flex flex-col leading-none">
           <span className="font-display text-xl tracking-wide">Butlers &amp; Co</span>
