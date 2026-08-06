@@ -19,10 +19,10 @@ export const Route = createFileRoute("/contact")({
 });
 
 const branches = [
-  { name: "The Butler Room", address: "12 Kasr El Nil St, Downtown", phone: "+20 100 000 0001" },
-  { name: "Velour", address: "8 Nile Corniche, Riverside", phone: "+20 100 000 0002" },
-  { name: "Noir Club", address: "Marina Walk, Level 3", phone: "+20 100 000 0003" },
-  { name: "Maison Verte", address: "31 Simon Bolivar, Garden City", phone: "+20 100 000 0004" },
+  { name: "The Butler Room", address: "12 Kasr El Nil St, Downtown", phone: "+20 100 741 9344" },
+  { name: "Velour", address: "8 Nile Corniche, Riverside", phone: "+20 100 741 9344" },
+  { name: "Noir Club", address: "Marina Walk, Level 3", phone: "+20 100 741 9344" },
+  { name: "Maison Verte", address: "31 Simon Bolivar, Garden City", phone: "+20 100 741 9344" },
 ];
 
 function Contact() {
@@ -39,11 +39,11 @@ function Contact() {
         <div>
           <SectionHeading eyebrow="Get in touch" title="Direct lines" align="left" />
           <ul className="mt-6 space-y-4 text-sm">
-            <li className="flex items-center gap-3"><Phone className="size-4 text-secondary" /> +20 100 000 0000</li>
+            <li className="flex items-center gap-3"><Phone className="size-4 text-secondary" /> <a href="tel:+201007419344" className="hover:text-gold">+20 100 741 9344</a></li>
             <li className="flex items-center gap-3"><Mail className="size-4 text-secondary" /> hello@butlersandco.com</li>
             <li className="flex items-center gap-3">
               <MessageCircle className="size-4 text-secondary" />
-              <a href="https://wa.me/201000000000" className="hover:text-gold">WhatsApp Business</a>
+              <a href="https://wa.me/201007419344" className="hover:text-gold">WhatsApp Business</a>
             </li>
             <li className="flex items-center gap-3"><MapPin className="size-4 text-secondary" /> Downtown District, Cairo</li>
           </ul>
