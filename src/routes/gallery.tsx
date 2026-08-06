@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { galleryItems, images } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -17,18 +18,27 @@ export const Route = createFileRoute("/gallery")({
   component: Gallery,
 });
 
-const filters = ["All", "Restaurants", "Cocktails", "Events", "Food", "Nightlife", "Staff"];
+const filters = [
+  { en: "All", ar: "الكل" },
+  { en: "Restaurants", ar: "المطاعم" },
+  { en: "Cocktails", ar: "المشروبات" },
+  { en: "Events", ar: "الفعاليات" },
+  { en: "Food", ar: "الأطباق" },
+  { en: "Nightlife", ar: "الحياة الليلية" },
+  { en: "Staff", ar: "الفريق" },
+];
 
 function Gallery() {
+  const { t, isAr } = useI18n();
   const [active, setActive] = useState("All");
   const items = galleryItems.filter((g) => active === "All" || g.category === active);
 
   return (
     <>
       <PageHero
-        eyebrow="Gallery"
-        title="Look inside"
-        description="Rooms, plates, pours and the people behind them."
+        eyebrow={t("Gallery", "المعرض")}
+        title={t("Look inside", "نظرة من الداخل")}
+        description={t("Rooms, plates, pours and the people behind them.", "أجواء وأطباق ومشروبات، والوجوه التي تقف خلفها.")}
         image={images.cocktails}
       />
 
@@ -36,13 +46,13 @@ function Gallery() {
         <div className="flex flex-wrap justify-center gap-2">
           {filters.map((f) => (
             <button
-              key={f}
-              onClick={() => setActive(f)}
+              key={f.en}
+              onClick={() => setActive(f.en)}
               className={`rounded-2xl border px-5 py-2.5 font-button text-xs font-semibold uppercase tracking-[0.12em] transition-colors ${
-                active === f ? "border-gold bg-gold text-foreground" : "border-border text-muted-foreground hover:border-gold"
+                active === f.en ? "border-gold bg-gold text-foreground" : "border-border text-muted-foreground hover:border-gold"
               }`}
             >
-              {f}
+              {isAr ? f.ar : f.en}
             </button>
           ))}
         </div>
@@ -50,9 +60,9 @@ function Gallery() {
         <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
           {items.map((g) => (
             <figure key={g.category} className="group relative overflow-hidden rounded-2xl">
-              <img src={g.src} alt={g.alt} loading="lazy" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={g.src} alt={isAr ? g.altAr : g.alt} loading="lazy" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <figcaption className="absolute bottom-0 w-full bg-linear-to-t from-[oklch(0.15_0_0)]/85 to-transparent p-5 font-button text-xs uppercase tracking-[0.14em] text-warm opacity-0 transition-opacity group-hover:opacity-100">
-                {g.category}
+                {isAr ? g.categoryAr : g.category}
               </figcaption>
             </figure>
           ))}
