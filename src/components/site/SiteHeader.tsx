@@ -2,21 +2,23 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { TopBar } from "./TopBar";
+import { useI18n } from "@/i18n";
 
 export const NAV_LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/brands", label: "Brands" },
-  { to: "/services", label: "Services" },
-  { to: "/events", label: "Events" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/careers", label: "Careers" },
-  { to: "/news", label: "News" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Home", labelAr: "الرئيسية" },
+  { to: "/about", label: "About", labelAr: "من نحن" },
+  { to: "/brands", label: "Brands", labelAr: "علاماتنا" },
+  { to: "/services", label: "Services", labelAr: "خدماتنا" },
+  { to: "/events", label: "Events", labelAr: "الفعاليات" },
+  { to: "/gallery", label: "Gallery", labelAr: "معرض الصور" },
+  { to: "/careers", label: "Careers", labelAr: "الوظائف" },
+  { to: "/news", label: "News", labelAr: "الأخبار" },
+  { to: "/contact", label: "Contact", labelAr: "تواصل معنا" },
 ] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { t, isAr } = useI18n();
 
   return (
     <header className="sticky top-0 z-50 ink-panel border-b border-white/10 backdrop-blur">
@@ -36,7 +38,7 @@ export function SiteHeader() {
               activeProps={{ className: "text-gold" }}
               className="font-button text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-white/75 transition-colors hover:text-gold"
             >
-              {l.label}
+              {isAr ? l.labelAr : l.label}
             </Link>
           ))}
         </nav>
@@ -46,11 +48,11 @@ export function SiteHeader() {
             to="/reservation"
             className="hidden rounded-2xl bg-gold px-5 py-2.5 font-button text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-gold-soft sm:inline-flex"
           >
-            Reserve
+            {t("Reserve", "احجز الآن")}
           </Link>
           <button
             onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={t("Toggle menu", "فتح القائمة")}
             className="rounded-xl border border-white/15 p-2 text-white lg:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -61,7 +63,7 @@ export function SiteHeader() {
       {open && (
         <nav className="border-t border-white/10 lg:hidden">
           <div className="container-site grid grid-cols-2 gap-1 py-4">
-            {[...NAV_LINKS, { to: "/reservation", label: "Reservation" } as const].map((l) => (
+            {[...NAV_LINKS, { to: "/reservation", label: "Reservation", labelAr: "الحجز" } as const].map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
@@ -69,7 +71,7 @@ export function SiteHeader() {
                 activeProps={{ className: "text-gold" }}
                 className="rounded-xl px-3 py-2 font-button text-sm uppercase tracking-wide text-white/80"
               >
-                {l.label}
+                {isAr ? l.labelAr : l.label}
               </Link>
             ))}
           </div>
