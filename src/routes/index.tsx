@@ -229,10 +229,18 @@ function Index() {
 
       <section className="container-site py-20">
         <p className="eyebrow text-center">Partners</p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-          {partners.map((p) => (
-            <span key={p} className="font-display text-lg text-muted-foreground/70">{p}</span>
-          ))}
+        <div className="marquee mt-8">
+          <div className="marquee-track">
+            {[...partners, ...partners].map((p, i) => (
+              <span
+                key={`${p}-${i}`}
+                aria-hidden={i >= partners.length}
+                className="shrink-0 px-8 font-display text-lg whitespace-nowrap text-muted-foreground/70 transition-colors hover:text-gold"
+              >
+                {p}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
