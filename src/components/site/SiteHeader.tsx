@@ -26,7 +26,7 @@ export function SiteHeader() {
       <div className="container-site flex h-20 items-center justify-between gap-6">
         <Link to="/" className="flex flex-col leading-none">
           <span className="font-display text-xl tracking-wide">Butlers &amp; Co</span>
-          <span className="eyebrow mt-1 text-[0.6rem]">Premium Hospitality</span>
+          <span className="eyebrow mt-1 text-[0.6rem]">{t("Premium Hospitality", "ضيافة استثنائية")}</span>
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
