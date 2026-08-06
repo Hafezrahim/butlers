@@ -101,13 +101,20 @@ function Index() {
         <div className="container-site">
           <SectionHeading eyebrow="Featured Brands" title="Our houses" align="left" />
           <div className="mt-12 space-y-6">
-            {brands.map((b) => (
+            {brands.map((b, i) => (
               <article
                 key={b.name}
-                className="group grid overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-gold md:grid-cols-[320px_1fr]"
+                className={`group grid overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-gold ${
+                  i % 2 === 0 ? "md:grid-cols-[320px_1fr]" : "md:grid-cols-[1fr_320px]"
+                }`}
               >
-                <img src={b.image} alt={b.name} loading="lazy" className="h-56 w-full object-cover md:h-full" />
-                <div className="flex flex-col justify-center gap-3 p-8">
+                <img
+                  src={b.image}
+                  alt={b.name}
+                  loading="lazy"
+                  className={`h-56 w-full object-cover md:h-full ${i % 2 === 0 ? "" : "md:order-2"}`}
+                />
+                <div className={`flex flex-col justify-center gap-3 p-8 ${i % 2 === 0 ? "" : "md:order-1"}`}>
                   <h3 className="text-2xl">{b.name}</h3>
                   <p className="text-sm text-muted-foreground">
                     {b.cuisine} · {b.location}
