@@ -19,7 +19,7 @@ export function TopBar() {
         <div className="flex min-w-0 items-center gap-5">
           <a href="tel:+201007419344" className="flex items-center gap-1.5 transition-colors hover:text-gold">
             <Phone className="size-3.5 shrink-0 text-gold" />
-            <span className="truncate">+20 100 741 9344</span>
+            <span dir="ltr" className="truncate">+20 100 741 9344</span>
           </a>
           <a href="mailto:hello@butlersandco.com" className="flex items-center gap-1.5 transition-colors hover:text-gold">
             <Mail className="size-3.5 shrink-0 text-gold" />
