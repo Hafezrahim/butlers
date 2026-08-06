@@ -26,6 +26,7 @@ import { Route as AccountLoyaltyRouteImport } from './routes/account.loyalty'
 import { Route as AccountProfileRouteImport } from './routes/account.profile'
 import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -112,6 +113,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminReservationsRoute = AdminReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
   '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/reservations'
     | '/account/'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/reservations'
     | '/account'
     | '/admin'
   id:
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/reservations'
     | '/account/'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -363,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/reservations': {
+      id: '/admin/reservations'
+      path: '/reservations'
+      fullPath: '/admin/reservations'
+      preLoaderRoute: typeof AdminReservationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
@@ -384,10 +403,12 @@ const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
 
 interface AdminRouteChildren {
+  AdminReservationsRoute: typeof AdminReservationsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminReservationsRoute: AdminReservationsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
