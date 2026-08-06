@@ -21,6 +21,7 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +83,11 @@ const AccountIndexRoute = AccountIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AccountRoute,
 } as any)
+const AccountReservationsRoute = AccountReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => AccountRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/reservations': typeof AccountReservationsRoute
   '/account/': typeof AccountIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/reservations': typeof AccountReservationsRoute
   '/account': typeof AccountIndexRoute
 }
 export interface FileRoutesById {
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/reservations': typeof AccountReservationsRoute
   '/account/': typeof AccountIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/reservations'
     | '/account/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/reservations'
     | '/account'
   id:
     | '__root__'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/reservations'
     | '/account/'
   fileRoutesById: FileRoutesById
 }
@@ -269,14 +281,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof AccountRoute
     }
+    '/account/reservations': {
+      id: '/account/reservations'
+      path: '/reservations'
+      fullPath: '/account/reservations'
+      preLoaderRoute: typeof AccountReservationsRouteImport
+      parentRoute: typeof AccountRoute
+    }
   }
 }
 
 interface AccountRouteChildren {
+  AccountReservationsRoute: typeof AccountReservationsRoute
   AccountIndexRoute: typeof AccountIndexRoute
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
+  AccountReservationsRoute: AccountReservationsRoute,
   AccountIndexRoute: AccountIndexRoute,
 }
 
