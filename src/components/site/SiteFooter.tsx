@@ -39,7 +39,7 @@ export function SiteFooter() {
         <div>
           <p className="eyebrow">Contact</p>
           <ul className="mt-5 space-y-3 text-sm text-warm/80">
-            <li className="flex gap-2"><Phone className="size-4 text-gold" /> +20 100 000 0000</li>
+            <li className="flex gap-2"><Phone className="size-4 text-gold" /> <a href="tel:+201007419344" className="hover:text-gold">+20 100 741 9344</a></li>
             <li className="flex gap-2"><Mail className="size-4 text-gold" /> hello@butlersandco.com</li>
             <li className="flex gap-2"><MapPin className="size-4 text-gold" /> Downtown District, Cairo</li>
           </ul>
