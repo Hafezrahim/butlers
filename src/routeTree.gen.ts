@@ -27,6 +27,7 @@ import { Route as AccountProfileRouteImport } from './routes/account.profile'
 import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminGuestsRouteImport } from './routes/admin.guests'
 import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 
 const IndexRoute = IndexRouteImport.update({
@@ -119,6 +120,11 @@ const AdminEventsRoute = AdminEventsRouteImport.update({
   path: '/events',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminGuestsRoute = AdminGuestsRouteImport.update({
+  id: '/guests',
+  path: '/guests',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminReservationsRoute = AdminReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/reservations'
     | '/admin/events'
+    | '/admin/guests'
     | '/admin/reservations'
     | '/account/'
     | '/admin/'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/reservations'
     | '/admin/events'
+    | '/admin/guests'
     | '/admin/reservations'
     | '/account'
     | '/admin'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/reservations'
     | '/admin/events'
+    | '/admin/guests'
     | '/admin/reservations'
     | '/account/'
     | '/admin/'
@@ -394,6 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/guests': {
+      id: '/admin/guests'
+      path: '/guests'
+      fullPath: '/admin/guests'
+      preLoaderRoute: typeof AdminGuestsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/reservations': {
       id: '/admin/reservations'
       path: '/reservations'
@@ -423,12 +442,14 @@ const AccountRouteWithChildren =
 
 interface AdminRouteChildren {
   AdminEventsRoute: typeof AdminEventsRoute
+  AdminGuestsRoute: typeof AdminGuestsRoute
   AdminReservationsRoute: typeof AdminReservationsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminEventsRoute: AdminEventsRoute,
+  AdminGuestsRoute: AdminGuestsRoute,
   AdminReservationsRoute: AdminReservationsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
