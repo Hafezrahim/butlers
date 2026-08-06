@@ -38,17 +38,17 @@ export function InquiryForm({ label = "Send Inquiry" }: { label?: string }) {
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
         <Input id="name" name="name" maxLength={100} placeholder="Your full name" />
-        {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+        {errors['name'] && <p className="text-xs text-destructive">{errors['name']}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input id="email" name="email" type="email" maxLength={255} placeholder="you@company.com" />
-        {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+        {errors['email'] && <p className="text-xs text-destructive">{errors['email']}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
         <Textarea id="message" name="message" rows={5} maxLength={1000} placeholder="Tell us what you have in mind" />
-        {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+        {errors['message'] && <p className="text-xs text-destructive">{errors['message']}</p>}
       </div>
       <button
         type="submit"
