@@ -25,7 +25,7 @@ export function SiteFooter() {
 
         <div>
           <p className="eyebrow">Explore</p>
-          <ul className="mt-5 space-y-2.5">
+          <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2.5">
             {NAV_LINKS.slice(1).map((l) => (
               <li key={l.to}>
                 <Link to={l.to} className="text-sm text-warm/80 transition-colors hover:text-gold">
