@@ -32,11 +32,11 @@ function AdminDashboard() {
       </div>
 
       <PanelCard title={t("Weekly occupancy", "الإشغال الأسبوعي")}>
-        <div className="flex h-48 items-end gap-3">
+        <div className="flex items-end gap-3">
           {OCCUPANCY.map((d) => (
             <div key={d.day} className="flex flex-1 flex-col items-center gap-2">
-              <div className="flex w-full flex-1 items-end">
-                <div className="w-full rounded-t-xl bg-primary/80" style={{ height: `${d.pct}%` }} />
+              <div className="relative h-40 w-full">
+                <div className="absolute bottom-0 w-full rounded-t-xl bg-primary/80" style={{ height: `${d.pct}%` }} />
               </div>
               <span className="font-button text-[0.62rem] uppercase tracking-[0.1em] text-muted-foreground">
                 {isAr ? d.dayAr : d.day}
