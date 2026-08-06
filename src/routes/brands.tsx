@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Clock, MapPin } from "lucide-react";
 import { PageHero, SectionHeading } from "@/components/site/PageHero";
 import { brands, images } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/brands")({
   head: () => ({
@@ -18,33 +19,39 @@ export const Route = createFileRoute("/brands")({
 });
 
 function Brands() {
+  const { t, isAr } = useI18n();
   return (
     <>
       <PageHero
-        eyebrow="Our Brands"
-        title="A portfolio with a point of view"
-        description="Each house has its own personality, kitchen and crowd — held together by one standard of service."
+        eyebrow={t("Our Brands", "علاماتنا")}
+        title={t("A portfolio with a point of view", "محفظة ذات هوية مميزة")}
+        description={t(
+          "Each house has its own personality, kitchen and crowd — held together by one standard of service.",
+          "لكل بيت شخصيته الخاصة ومطبخه وجمهوره — يجمعهم جميعًا معيار خدمة واحد."
+        )}
         image={images.nightlife}
       />
 
       <section className="container-site py-24">
-        <SectionHeading eyebrow="Portfolio" title="Where to find us" />
+        <SectionHeading eyebrow={t("Portfolio", "المحفظة")} title={t("Where to find us", "أين تجدنا")} />
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {brands.map((b) => (
             <article key={b.name} className="overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-gold">
-              <img src={b.image} alt={b.name} loading="lazy" className="h-64 w-full object-cover" />
+              <img src={b.image} alt={isAr ? b.nameAr : b.name} loading="lazy" className="h-64 w-full object-cover" />
               <div className="space-y-4 p-8">
                 <div>
-                  <h3 className="text-2xl">{b.name}</h3>
-                  <p className="eyebrow mt-2">{b.cuisine}</p>
+                  <h3 className="text-2xl">{isAr ? b.nameAr : b.name}</h3>
+                  <p className="eyebrow mt-2">{isAr ? b.cuisineAr : b.cuisine}</p>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  A signature Butlers &amp; Co destination with a seasonal menu, curated wine list and a
-                  room designed for long evenings.
+                  {t(
+                    "A signature Butlers & Co destination with a seasonal menu, curated wine list and a room designed for long evenings.",
+                    "وجهة مميزة من بتلرز آند كو بقائمة طعام موسمية، وقائمة نبيذ منتقاة بعناية، وأجواء مصممة لأمسيات طويلة."
+                  )}
                 </p>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><MapPin className="size-4 text-secondary" /> {b.location}</li>
-                  <li className="flex items-center gap-2"><Clock className="size-4 text-secondary" /> Daily · 12:00 — 01:00</li>
+                  <li className="flex items-center gap-2"><MapPin className="size-4 text-secondary" /> {isAr ? b.locationAr : b.location}</li>
+                  <li className="flex items-center gap-2"><Clock className="size-4 text-secondary" /> {t("Daily · 12:00 — 01:00", "يوميًا · 12:00 — 01:00")}</li>
                 </ul>
                 <div className="aspect-[16/7] w-full overflow-hidden rounded-xl bg-muted">
                   <iframe
@@ -58,7 +65,7 @@ function Brands() {
                   to="/reservation"
                   className="inline-flex rounded-2xl bg-gold px-6 py-3 font-button text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-gold-soft"
                 >
-                  Reserve
+                  {t("Reserve", "احجز الآن")}
                 </Link>
               </div>
             </article>

@@ -237,3 +237,42 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* ---------------- Arabic / RTL ---------------- */
+[dir="rtl"] body,
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .font-button,
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+}
+
+/* Latin letter-spacing / uppercase styling does not suit Arabic script */
+[dir="rtl"] [class*="tracking-"],
+[dir="rtl"] .eyebrow {
+  letter-spacing: normal !important;
+}
+
+[dir="rtl"] [class*="uppercase"],
+[dir="rtl"] .eyebrow {
+  text-transform: none !important;
+}
+
+[dir="rtl"] .gold-rule {
+  background: linear-gradient(270deg, var(--gold), transparent);
+}
+
+@keyframes marquee-x-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+
+[dir="rtl"] .marquee-track {
+  animation-name: marquee-x-rtl;
+}

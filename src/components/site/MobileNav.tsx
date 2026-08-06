@@ -1,15 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { Home, Wine, CalendarDays, Phone, CalendarCheck } from "lucide-react";
+import { useI18n } from "@/i18n";
 
 const items = [
-  { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/brands", label: "Brands", icon: Wine },
-  { to: "/reservation", label: "Reserve", icon: CalendarCheck },
-  { to: "/events", label: "Events", icon: CalendarDays },
-  { to: "/contact", label: "Contact", icon: Phone },
+  { to: "/", label: "Home", labelAr: "الرئيسية", icon: Home, exact: true },
+  { to: "/brands", label: "Brands", labelAr: "علاماتنا", icon: Wine },
+  { to: "/reservation", label: "Reserve", labelAr: "احجز", icon: CalendarCheck },
+  { to: "/events", label: "Events", labelAr: "الفعاليات", icon: CalendarDays },
+  { to: "/contact", label: "Contact", labelAr: "تواصل", icon: Phone },
 ] as const;
 
 export function MobileNav() {
+  const { isAr } = useI18n();
   return (
     <nav className="ink-panel fixed inset-x-0 bottom-0 z-50 border-t border-white/10 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
       <ul className="grid grid-cols-5">
@@ -25,7 +27,7 @@ export function MobileNav() {
               >
                 <Icon className="size-5 shrink-0" />
                 <span className="font-button text-[0.6rem] font-semibold uppercase tracking-[0.1em]">
-                  {i.label}
+                  {isAr ? i.labelAr : i.label}
                 </span>
               </Link>
             </li>

@@ -1,13 +1,16 @@
-import { useState } from "react";
 import { Instagram, Facebook, Mail, Phone, LogIn, UserPlus } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/i18n";
 
 export function TopBar() {
-  const [lang, setLang] = useState<"EN" | "AR">("EN");
+  const { lang, setLang, t } = useI18n();
 
   const authSoon = () =>
-    toast("Accounts coming soon", {
-      description: "Sign in and sign up need a backend — enable Lovable Cloud to activate them.",
+    toast(t("Accounts coming soon", "الحسابات قريبًا"), {
+      description: t(
+        "Sign in and sign up need a backend — enable Lovable Cloud to activate them.",
+        "تسجيل الدخول وإنشاء الحساب يحتاجان إلى خدمة خلفية — فعّل Lovable Cloud لتشغيلهما.",
+      ),
     });
 
   return (
@@ -16,7 +19,7 @@ export function TopBar() {
         <div className="flex min-w-0 items-center gap-5">
           <a href="tel:+201007419344" className="flex items-center gap-1.5 transition-colors hover:text-gold">
             <Phone className="size-3.5 shrink-0 text-gold" />
-            <span className="truncate">+20 100 741 9344</span>
+            <span dir="ltr" className="truncate">+20 100 741 9344</span>
           </a>
           <a href="mailto:hello@butlersandco.com" className="flex items-center gap-1.5 transition-colors hover:text-gold">
             <Mail className="size-3.5 shrink-0 text-gold" />
@@ -35,7 +38,7 @@ export function TopBar() {
           </div>
 
           <div className="flex items-center overflow-hidden rounded-xl border border-white/15 font-button text-[0.65rem] font-semibold uppercase tracking-[0.1em]">
-            {(["EN", "AR"] as const).map((l) => (
+            {(["en", "ar"] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
@@ -44,17 +47,17 @@ export function TopBar() {
                   lang === l ? "bg-gold text-foreground" : "text-white/70 hover:text-gold"
                 }`}
               >
-                {l === "EN" ? "En" : "Ar"}
+                {l === "en" ? "En" : "ع"}
               </button>
             ))}
           </div>
 
           <div className="flex items-center gap-3 font-button text-[0.65rem] font-semibold uppercase tracking-[0.1em]">
             <button onClick={authSoon} className="flex items-center gap-1.5 transition-colors hover:text-gold">
-              <LogIn className="size-3.5" /> Sign In
+              <LogIn className="size-3.5" /> {t("Sign In", "تسجيل الدخول")}
             </button>
             <button onClick={authSoon} className="flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
-              <UserPlus className="size-3.5" /> Sign Up
+              <UserPlus className="size-3.5" /> {t("Sign Up", "إنشاء حساب")}
             </button>
           </div>
         </div>

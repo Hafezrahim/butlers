@@ -15,6 +15,7 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { MobileNav } from "@/components/site/MobileNav";
 import { Toaster } from "@/components/ui/sonner";
+import { I18nProvider } from "@/i18n";
 
 function NotFoundComponent() {
   return (
@@ -103,6 +104,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap",
       },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Tajawal:wght@300;400;500;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
     scripts: [
@@ -143,18 +148,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col bg-background">
-        <SiteHeader />
-        <main className="flex-1 pb-20 lg:pb-0">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <div className="hidden lg:block">
-          <SiteFooter />
+      <I18nProvider>
+        <div className="flex min-h-screen flex-col bg-background">
+          <SiteHeader />
+          <main className="flex-1 pb-20 lg:pb-0">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <div className="hidden lg:block">
+            <SiteFooter />
+          </div>
         </div>
-      </div>
-      <MobileNav />
-      <Toaster />
+        <MobileNav />
+        <Toaster />
+      </I18nProvider>
     </QueryClientProvider>
   );
 }

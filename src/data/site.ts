@@ -8,42 +8,42 @@ import hero from "@/assets/hero-restaurant.jpg";
 export const images = { cocktails, events, food, nightlife, staff, hero };
 
 export const services = [
-  { slug: "restaurant-management", name: "Restaurant Management", icon: "UtensilsCrossed", desc: "End-to-end operations, service standards and profitability for full-service venues." },
-  { slug: "nightlife", name: "Nightlife Operations", icon: "Disc3", desc: "Programming, door strategy and floor management for late-night destinations." },
-  { slug: "mixology", name: "Mixology", icon: "Martini", desc: "Signature cocktail menus, bar builds and beverage cost engineering." },
-  { slug: "catering", name: "Catering", icon: "ChefHat", desc: "Corporate and private catering delivered with fine-dining precision." },
-  { slug: "consultancy", name: "Consultancy", icon: "LineChart", desc: "Feasibility, concept design and turnaround for owners and investors." },
-  { slug: "events", name: "Events", icon: "PartyPopper", desc: "Weddings, launches and VIP experiences produced end to end." },
-  { slug: "training", name: "Training", icon: "GraduationCap", desc: "Academy-grade programmes for service, bar and management teams." },
-  { slug: "brand-development", name: "Brand Development", icon: "Sparkles", desc: "Naming, identity and guest journey design for new hospitality brands." },
+  { slug: "restaurant-management", name: "Restaurant Management", nameAr: "إدارة المطاعم", icon: "UtensilsCrossed", desc: "End-to-end operations, service standards and profitability for full-service venues.", descAr: "تشغيل متكامل ومعايير خدمة وربحية للمطاعم بكامل خدماتها." },
+  { slug: "nightlife", name: "Nightlife Operations", nameAr: "تشغيل الحياة الليلية", icon: "Disc3", desc: "Programming, door strategy and floor management for late-night destinations.", descAr: "برمجة الفعاليات واستراتيجية الاستقبال وإدارة الصالة لوجهات السهر." },
+  { slug: "mixology", name: "Mixology", nameAr: "فن المشروبات", icon: "Martini", desc: "Signature cocktail menus, bar builds and beverage cost engineering.", descAr: "قوائم مشروبات مميزة وتصميم البارات وهندسة تكلفة المشروبات." },
+  { slug: "catering", name: "Catering", nameAr: "خدمات الضيافة", icon: "ChefHat", desc: "Corporate and private catering delivered with fine-dining precision.", descAr: "ضيافة للشركات والمناسبات الخاصة بدقة مطاعم الطهي الراقي." },
+  { slug: "consultancy", name: "Consultancy", nameAr: "الاستشارات", icon: "LineChart", desc: "Feasibility, concept design and turnaround for owners and investors.", descAr: "دراسات جدوى وتصميم مفاهيم وإعادة هيكلة للملاك والمستثمرين." },
+  { slug: "events", name: "Events", nameAr: "الفعاليات", icon: "PartyPopper", desc: "Weddings, launches and VIP experiences produced end to end.", descAr: "أفراح وحفلات إطلاق وتجارب كبار الشخصيات بتنفيذ متكامل." },
+  { slug: "training", name: "Training", nameAr: "التدريب", icon: "GraduationCap", desc: "Academy-grade programmes for service, bar and management teams.", descAr: "برامج أكاديمية لفرق الخدمة والبار والإدارة." },
+  { slug: "brand-development", name: "Brand Development", nameAr: "تطوير العلامات", icon: "Sparkles", desc: "Naming, identity and guest journey design for new hospitality brands.", descAr: "تسمية وهوية وتصميم رحلة الضيف للعلامات الجديدة." },
 ];
 
 export const brands = [
-  { name: "The Butler Room", cuisine: "Modern European", location: "Downtown", image: hero },
-  { name: "Velour", cuisine: "Cocktail Lounge", location: "Riverside", image: cocktails },
-  { name: "Noir Club", cuisine: "Nightlife", location: "Marina Walk", image: nightlife },
-  { name: "Maison Verte", cuisine: "Contemporary Levantine", location: "Garden City", image: food },
+  { name: "The Butler Room", nameAr: "ذا باتلر روم", cuisine: "Modern European", cuisineAr: "أوروبي معاصر", location: "Downtown", locationAr: "وسط البلد", image: hero },
+  { name: "Velour", nameAr: "فيلور", cuisine: "Cocktail Lounge", cuisineAr: "صالة مشروبات", location: "Riverside", locationAr: "كورنيش النيل", image: cocktails },
+  { name: "Noir Club", nameAr: "نوار كلوب", cuisine: "Nightlife", cuisineAr: "حياة ليلية", location: "Marina Walk", locationAr: "ممشى المارينا", image: nightlife },
+  { name: "Maison Verte", nameAr: "ميزون فيرت", cuisine: "Contemporary Levantine", cuisineAr: "شامي معاصر", location: "Garden City", locationAr: "جاردن سيتي", image: food },
 ];
 
 export const stats = [
-  { value: "15+", label: "Years Experience" },
-  { value: "20+", label: "Hospitality Brands" },
-  { value: "500+", label: "Employees" },
-  { value: "1000+", label: "Events Delivered" },
-  { value: "3M+", label: "Guests Served" },
+  { value: "15+", label: "Years Experience", labelAr: "سنة خبرة" },
+  { value: "20+", label: "Hospitality Brands", labelAr: "علامة ضيافة" },
+  { value: "500+", label: "Employees", labelAr: "موظف" },
+  { value: "1000+", label: "Events Delivered", labelAr: "فعالية منفذة" },
+  { value: "3M+", label: "Guests Served", labelAr: "ضيف تمت خدمته" },
 ];
 
 export const upcomingEvents = [
-  { title: "Golden Hour Tasting Menu", date: "12 Sep", venue: "The Butler Room", desc: "A seven-course seasonal journey paired with rare vintages.", image: food },
-  { title: "Velour Sessions: Live Jazz", date: "20 Sep", venue: "Velour", desc: "Late-night jazz with a limited-edition cocktail flight.", image: cocktails },
-  { title: "Noir Anniversary Night", date: "04 Oct", venue: "Noir Club", desc: "International guest DJs and an all-night bottle experience.", image: nightlife },
+  { title: "Golden Hour Tasting Menu", titleAr: "قائمة تذوق الساعة الذهبية", date: "12 Sep", dateAr: "١٢ سبتمبر", venue: "The Butler Room", venueAr: "ذا باتلر روم", desc: "A seven-course seasonal journey paired with rare vintages.", descAr: "رحلة موسمية من سبعة أطباق مع نخبة من المشروبات النادرة.", image: food },
+  { title: "Velour Sessions: Live Jazz", titleAr: "أمسيات فيلور: جاز حي", date: "20 Sep", dateAr: "٢٠ سبتمبر", venue: "Velour", venueAr: "فيلور", desc: "Late-night jazz with a limited-edition cocktail flight.", descAr: "جاز حتى وقت متأخر مع تشكيلة مشروبات بإصدار محدود.", image: cocktails },
+  { title: "Noir Anniversary Night", titleAr: "ليلة ذكرى نوار", date: "04 Oct", dateAr: "٤ أكتوبر", venue: "Noir Club", venueAr: "نوار كلوب", desc: "International guest DJs and an all-night bottle experience.", descAr: "منسقو أغانٍ عالميون وتجربة تمتد طوال الليل.", image: nightlife },
 ];
 
 export const galleryItems = [
-  { src: food, category: "Food", alt: "Plated fine dining dish" },
-  { src: cocktails, category: "Cocktails", alt: "Cocktail being poured" },
-  { src: hero, category: "Restaurants", alt: "Luxury restaurant interior" },
-  { src: nightlife, category: "Nightlife", alt: "Nightlife lounge" },
-  { src: events, category: "Events", alt: "Private event table setting" },
-  { src: staff, category: "Staff", alt: "Hospitality team" },
+  { src: food, category: "Food", categoryAr: "الأطباق", alt: "Plated fine dining dish", altAr: "طبق من المطبخ الراقي" },
+  { src: cocktails, category: "Cocktails", categoryAr: "المشروبات", alt: "Cocktail being poured", altAr: "تحضير كوكتيل" },
+  { src: hero, category: "Restaurants", categoryAr: "المطاعم", alt: "Luxury restaurant interior", altAr: "تصميم داخلي لمطعم فاخر" },
+  { src: nightlife, category: "Nightlife", categoryAr: "الحياة الليلية", alt: "Nightlife lounge", altAr: "صالة سهر" },
+  { src: events, category: "Events", categoryAr: "الفعاليات", alt: "Private event table setting", altAr: "تجهيز طاولة مناسبة خاصة" },
+  { src: staff, category: "Staff", categoryAr: "الفريق", alt: "Hospitality team", altAr: "فريق الضيافة" },
 ];

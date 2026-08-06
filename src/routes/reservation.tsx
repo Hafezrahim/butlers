@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { brands, images } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/reservation")({
   head: () => ({
@@ -24,39 +25,69 @@ export const Route = createFileRoute("/reservation")({
   component: Reservation,
 });
 
-const steps = ["Brand", "Branch", "Guests", "Date", "Time", "Experience", "Details", "Requests", "Confirm"];
-const branchesByBrand: Record<string, string[]> = {
-  "The Butler Room": ["Downtown", "Zamalek"],
-  Velour: ["Riverside", "New Cairo"],
-  "Noir Club": ["Marina Walk"],
-  "Maison Verte": ["Garden City"],
-};
-const times = ["18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
-const diningOptions = ["À la carte", "Set tasting menu", "Family style sharing", "Vegetarian / vegan", "Halal only", "Gluten free"];
-const drinkOptions = ["No alcohol", "Signature cocktails", "Wine pairing", "Champagne on arrival", "Mocktails", "Full open bar"];
-const extraOptions = [
-  "Table decoration",
-  "Flower arrangement",
-  "Birthday cake",
-  "Video recording",
-  "Professional photography",
-  "Live music",
-  "Private area",
-  "Cake / candles service",
-  "Airport-style pickup",
+const steps = [
+  { label: "Brand", labelAr: "العلامة" },
+  { label: "Branch", labelAr: "الفرع" },
+  { label: "Guests", labelAr: "الضيوف" },
+  { label: "Date", labelAr: "التاريخ" },
+  { label: "Time", labelAr: "الوقت" },
+  { label: "Experience", labelAr: "التجربة" },
+  { label: "Details", labelAr: "البيانات" },
+  { label: "Requests", labelAr: "الطلبات" },
+  { label: "Confirm", labelAr: "التأكيد" },
 ];
 
-const detailsSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your full name").max(100),
-  phone: z.string().trim().min(7, "Enter a valid phone number").max(25),
-  email: z.string().trim().email("Enter a valid email").max(255),
-});
+const branchesByBrand: Record<string, { label: string; labelAr: string }[]> = {
+  "The Butler Room": [
+    { label: "Downtown", labelAr: "وسط البلد" },
+    { label: "Zamalek", labelAr: "الزمالك" },
+  ],
+  Velour: [
+    { label: "Riverside", labelAr: "كورنيش النيل" },
+    { label: "New Cairo", labelAr: "القاهرة الجديدة" },
+  ],
+  "Noir Club": [{ label: "Marina Walk", labelAr: "ممشى المارينا" }],
+  "Maison Verte": [{ label: "Garden City", labelAr: "جاردن سيتي" }],
+};
+
+const times = ["18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+
+const diningOptions = [
+  { label: "À la carte", labelAr: "قائمة مفتوحة" },
+  { label: "Set tasting menu", labelAr: "قائمة تذوق محددة" },
+  { label: "Family style sharing", labelAr: "تقديم مشترك عائلي" },
+  { label: "Vegetarian / vegan", labelAr: "نباتي / نباتي صرف" },
+  { label: "Halal only", labelAr: "حلال فقط" },
+  { label: "Gluten free", labelAr: "خالٍ من الجلوتين" },
+];
+
+const drinkOptions = [
+  { label: "No alcohol", labelAr: "بدون كحول" },
+  { label: "Signature cocktails", labelAr: "كوكتيلات مميزة" },
+  { label: "Wine pairing", labelAr: "مصاحبة نبيذ" },
+  { label: "Champagne on arrival", labelAr: "شمبانيا عند الوصول" },
+  { label: "Mocktails", labelAr: "موكتيل" },
+  { label: "Full open bar", labelAr: "بار مفتوح بالكامل" },
+];
+
+const extraOptions = [
+  { label: "Table decoration", labelAr: "تزيين الطاولة" },
+  { label: "Flower arrangement", labelAr: "تنسيق ورد" },
+  { label: "Birthday cake", labelAr: "تورتة عيد ميلاد" },
+  { label: "Video recording", labelAr: "تصوير فيديو" },
+  { label: "Professional photography", labelAr: "تصوير فوتوغرافي احترافي" },
+  { label: "Live music", labelAr: "موسيقى حية" },
+  { label: "Private area", labelAr: "منطقة خاصة" },
+  { label: "Cake / candles service", labelAr: "خدمة تورتة / شموع" },
+  { label: "Airport-style pickup", labelAr: "خدمة استقبال VIP" },
+];
 
 function makeCode() {
   return `BC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 }
 
 function Reservation() {
+  const { t, isAr, dir } = useI18n();
   const [step, setStep] = useState(0);
   const [brand, setBrand] = useState("");
   const [branch, setBranch] = useState("");
@@ -73,6 +104,12 @@ function Reservation() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirmed, setConfirmed] = useState<ReservationData | null>(null);
   const ticketRef = useRef<HTMLDivElement>(null);
+
+  const detailsSchema = z.object({
+    name: z.string().trim().min(2, t("Please enter your full name", "الرجاء إدخال اسمك الكامل")).max(100),
+    phone: z.string().trim().min(7, t("Enter a valid phone number", "أدخل رقم هاتف صحيح")).max(25),
+    email: z.string().trim().email(t("Enter a valid email", "أدخل بريدًا إلكترونيًا صحيحًا")).max(255),
+  });
 
   const detailsValid = detailsSchema.safeParse({ name, phone, email }).success;
 
@@ -98,7 +135,7 @@ function Reservation() {
     }
     setConfirmed({
       code: makeCode(),
-      createdAt: new Date().toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }),
+      createdAt: new Date().toLocaleString(isAr ? "ar-EG" : "en-GB", { dateStyle: "medium", timeStyle: "short" }),
       brand,
       branch,
       guests,
@@ -112,7 +149,7 @@ function Reservation() {
       extras,
       notes,
     });
-    toast.success("Reservation request received. We'll confirm by phone.");
+    toast.success(t("Reservation request received. We'll confirm by phone.", "تم استلام طلب الحجز. سنؤكد الحجز عبر الهاتف."));
   }
 
   async function downloadPng() {
@@ -157,14 +194,14 @@ function Reservation() {
         image={images.events}
       />
 
-      <section className="container-site max-w-3xl py-20">
+      <section className="container-site max-w-3xl py-20" dir={dir}>
         {confirmed ? (
           <div className="space-y-6">
             <div className="text-center">
               <Check className="mx-auto size-10 text-gold" />
-              <h2 className="mt-4 text-3xl">Reservation requested</h2>
+              <h2 className="mt-4 text-3xl">{t("Reservation requested", "تم طلب الحجز")}</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Your reference is <span className="text-gold">{confirmed.code}</span> — save or download it below.
+                {t("Your reference is", "الرقم المرجعي الخاص بك هو")} <span className="text-gold">{confirmed.code}</span> — {t("save or download it below.", "احفظه أو حمّله أدناه.")}
               </p>
             </div>
 
@@ -172,18 +209,18 @@ function Reservation() {
 
             <div className="flex flex-wrap justify-center gap-3">
               <button onClick={downloadPng} className={ghostBtn}>
-                <Download className="size-4" /> Download PNG
+                <Download className="size-4" /> {t("Download PNG", "تحميل PNG")}
               </button>
               <button
                 onClick={downloadPdf}
                 className="inline-flex items-center gap-2 rounded-2xl bg-gold px-6 py-3 font-button text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-gold-soft"
               >
-                <FileText className="size-4" /> Download PDF
+                <FileText className="size-4" /> {t("Download PDF", "تحميل PDF")}
               </button>
             </div>
 
             <p className="text-center text-xs text-muted-foreground">
-              Bookings are not stored yet — enable Lovable Cloud to save reservations to a database.
+              {t("Bookings are not stored yet — enable Lovable Cloud to save reservations to a database.", "لا يتم حفظ الحجوزات حاليًا — فعّل Lovable Cloud لحفظ الحجوزات في قاعدة بيانات.")}
             </p>
           </div>
         ) : (
@@ -191,13 +228,13 @@ function Reservation() {
         <ol className="flex flex-wrap items-center gap-2">
           {steps.map((s, i) => (
             <li
-              key={s}
+              key={s.label}
               className={`flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-button uppercase tracking-wide ${
                 i === step ? "bg-secondary text-secondary-foreground" : i < step ? "text-gold" : "text-muted-foreground"
               }`}
             >
               {i < step ? <Check className="size-3.5" /> : <span>{i + 1}</span>}
-              {s}
+              {isAr ? s.labelAr : s.label}
             </li>
           ))}
         </ol>
@@ -207,7 +244,7 @@ function Reservation() {
                 <div className="flex flex-wrap gap-3">
                   {brands.map((b) => (
                     <button key={b.name} onClick={() => { setBrand(b.name); setBranch(""); }} className={`${pill} ${brand === b.name ? on : off}`}>
-                      {b.name}
+                      {isAr ? b.nameAr : b.name}
                     </button>
                   ))}
                 </div>
@@ -216,8 +253,8 @@ function Reservation() {
               {step === 1 && (
                 <div className="flex flex-wrap gap-3">
                   {(branchesByBrand[brand] ?? []).map((b) => (
-                    <button key={b} onClick={() => setBranch(b)} className={`${pill} ${branch === b ? on : off}`}>
-                      {b}
+                    <button key={b.label} onClick={() => setBranch(b.label)} className={`${pill} ${branch === b.label ? on : off}`}>
+                      {isAr ? b.labelAr : b.label}
                     </button>
                   ))}
                 </div>
@@ -235,16 +272,16 @@ function Reservation() {
 
               {step === 3 && (
                 <div className="space-y-2">
-                  <Label htmlFor="date">Choose a date</Label>
+                  <Label htmlFor="date">{t("Choose a date", "اختر تاريخًا")}</Label>
                   <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
                 </div>
               )}
 
               {step === 4 && (
                 <div className="flex flex-wrap gap-3">
-                  {times.map((t) => (
-                    <button key={t} onClick={() => setTime(t)} className={`${pill} ${time === t ? on : off}`}>
-                      {t}
+                  {times.map((tm) => (
+                    <button key={tm} onClick={() => setTime(tm)} className={`${pill} ${time === tm ? on : off}`}>
+                      {tm}
                     </button>
                   ))}
                 </div>
@@ -253,37 +290,37 @@ function Reservation() {
               {step === 5 && (
                 <div className="space-y-7">
                   <div>
-                    <p className="eyebrow">Eating preference</p>
+                    <p className="eyebrow">{t("Eating preference", "تفضيل الطعام")}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
                       {diningOptions.map((o) => (
-                        <button key={o} onClick={() => setDining(o)} className={`${pill} ${dining === o ? on : off}`}>
-                          {o}
+                        <button key={o.label} onClick={() => setDining(o.label)} className={`${pill} ${dining === o.label ? on : off}`}>
+                          {isAr ? o.labelAr : o.label}
                         </button>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="eyebrow">Drinking preference</p>
+                    <p className="eyebrow">{t("Drinking preference", "تفضيل المشروبات")}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
                       {drinkOptions.map((o) => (
-                        <button key={o} onClick={() => setDrinks(o)} className={`${pill} ${drinks === o ? on : off}`}>
-                          {o}
+                        <button key={o.label} onClick={() => setDrinks(o.label)} className={`${pill} ${drinks === o.label ? on : off}`}>
+                          {isAr ? o.labelAr : o.label}
                         </button>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="eyebrow">Add-ons (optional)</p>
+                    <p className="eyebrow">{t("Add-ons (optional)", "إضافات (اختياري)")}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
                       {extraOptions.map((o) => (
                         <button
-                          key={o}
+                          key={o.label}
                           onClick={() =>
-                            setExtras((prev) => (prev.includes(o) ? prev.filter((x) => x !== o) : [...prev, o]))
+                            setExtras((prev) => (prev.includes(o.label) ? prev.filter((x) => x !== o.label) : [...prev, o.label]))
                           }
-                          className={`${pill} ${extras.includes(o) ? on : off}`}
+                          className={`${pill} ${extras.includes(o.label) ? on : off}`}
                         >
-                          {o}
+                          {isAr ? o.labelAr : o.label}
                         </button>
                       ))}
                     </div>
@@ -294,17 +331,17 @@ function Reservation() {
               {step === 6 && (
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2 sm:col-span-2">
-                    <Label htmlFor="name">Full name</Label>
-                    <Input id="name" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="Your full name" />
+                    <Label htmlFor="name">{t("Full name", "الاسم الكامل")}</Label>
+                    <Input id="name" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder={t("Your full name", "اسمك الكامل")} />
                     {errors['name'] && <p className="text-xs text-destructive">{errors['name']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
+                    <Label htmlFor="phone">{t("Phone", "الهاتف")}</Label>
                     <Input id="phone" type="tel" value={phone} maxLength={25} onChange={(e) => setPhone(e.target.value)} placeholder="+20 100 000 0000" />
                     {errors['phone'] && <p className="text-xs text-destructive">{errors['phone']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t("Email", "البريد الإلكتروني")}</Label>
                     <Input id="email" type="email" value={email} maxLength={255} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
                     {errors['email'] && <p className="text-xs text-destructive">{errors['email']}</p>}
                   </div>
@@ -313,26 +350,26 @@ function Reservation() {
 
               {step === 7 && (
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Special requests</Label>
-                  <Textarea id="notes" rows={5} maxLength={500} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Allergies, occasion, seating preference" />
+                  <Label htmlFor="notes">{t("Special requests", "طلبات خاصة")}</Label>
+                  <Textarea id="notes" rows={5} maxLength={500} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("Allergies, occasion, seating preference", "الحساسية، المناسبة، تفضيل الجلوس")} />
                 </div>
               )}
 
               {step === 8 && (
                 <dl className="grid gap-3 text-sm sm:grid-cols-2">
                   {[
-                    ["Brand", brand],
-                    ["Branch", branch],
-                    ["Guests", String(guests)],
-                    ["Date", date],
-                    ["Time", time],
-                    ["Name", name],
-                    ["Phone", phone],
-                    ["Email", email],
-                    ["Dining", dining],
-                    ["Drinks", drinks],
-                    ["Add-ons", extras.join(", ") || "—"],
-                    ["Requests", notes || "—"],
+                    [t("Brand", "العلامة"), brand],
+                    [t("Branch", "الفرع"), branch],
+                    [t("Guests", "الضيوف"), String(guests)],
+                    [t("Date", "التاريخ"), date],
+                    [t("Time", "الوقت"), time],
+                    [t("Name", "الاسم"), name],
+                    [t("Phone", "الهاتف"), phone],
+                    [t("Email", "البريد الإلكتروني"), email],
+                    [t("Dining", "الطعام"), dining],
+                    [t("Drinks", "المشروبات"), drinks],
+                    [t("Add-ons", "الإضافات"), extras.join(", ") || "—"],
+                    [t("Requests", "الطلبات"), notes || "—"],
                   ].map(([k, v]) => (
                     <div key={k} className="rounded-xl border border-border p-4">
                       <dt className="eyebrow">{k}</dt>
@@ -348,11 +385,11 @@ function Reservation() {
                   disabled={step === 0}
                   className="inline-flex items-center gap-1 font-button text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground disabled:opacity-40"
                 >
-                  <ChevronLeft className="size-4" /> Back
+                  <ChevronLeft className="size-4" /> {t("Back", "رجوع")}
                 </button>
                 {step === 8 ? (
                   <button onClick={confirm} className="rounded-2xl bg-gold px-6 py-3 font-button text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-gold-soft">
-                    Confirm Reservation
+                    {t("Confirm Reservation", "تأكيد الحجز")}
                   </button>
                 ) : (
                   <button
@@ -360,7 +397,7 @@ function Reservation() {
                     disabled={!canNext}
                     className="inline-flex items-center gap-1 rounded-2xl bg-gold px-6 py-3 font-button text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-gold-soft disabled:opacity-40"
                   >
-                    Next <ChevronRight className="size-4" />
+                    {t("Next", "التالي")} <ChevronRight className="size-4" />
                   </button>
                 )}
               </div>

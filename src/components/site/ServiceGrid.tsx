@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { services } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 const icons: Record<string, LucideIcon> = {
   UtensilsCrossed,
@@ -25,6 +26,7 @@ const icons: Record<string, LucideIcon> = {
 };
 
 export function ServiceGrid() {
+  const { t, isAr } = useI18n();
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {services.map((s) => {
@@ -35,13 +37,13 @@ export function ServiceGrid() {
             className="group rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-gold"
           >
             <Icon className="size-7 text-secondary" />
-            <h3 className="mt-5 text-lg">{s.name}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+            <h3 className="mt-5 text-lg">{isAr ? s.nameAr : s.name}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{isAr ? s.descAr : s.desc}</p>
             <Link
               to="/services"
               className="mt-5 inline-flex items-center gap-2 font-button text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground transition-colors group-hover:text-gold"
             >
-              Learn More <ArrowRight className="size-4" />
+              {t("Learn More", "اعرف المزيد")} <ArrowRight className="size-4" />
             </Link>
           </article>
         );
