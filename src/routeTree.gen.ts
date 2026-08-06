@@ -22,6 +22,7 @@ import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
 import { Route as AccountLoyaltyRouteImport } from './routes/account.loyalty'
+import { Route as AccountProfileRouteImport } from './routes/account.profile'
 import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
 
 const IndexRoute = IndexRouteImport.update({
@@ -89,6 +90,11 @@ const AccountLoyaltyRoute = AccountLoyaltyRouteImport.update({
   path: '/loyalty',
   getParentRoute: () => AccountRoute,
 } as any)
+const AccountProfileRoute = AccountProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AccountRoute,
+} as any)
 const AccountReservationsRoute = AccountReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/account/': typeof AccountIndexRoute
 }
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/account': typeof AccountIndexRoute
 }
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
   '/account/': typeof AccountIndexRoute
 }
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/reservation'
     | '/services'
     | '/account/loyalty'
+    | '/account/profile'
     | '/account/reservations'
     | '/account/'
   fileRoutesByTo: FileRoutesByTo
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/reservation'
     | '/services'
     | '/account/loyalty'
+    | '/account/profile'
     | '/account/reservations'
     | '/account'
   id:
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/reservation'
     | '/services'
     | '/account/loyalty'
+    | '/account/profile'
     | '/account/reservations'
     | '/account/'
   fileRoutesById: FileRoutesById
@@ -300,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountLoyaltyRouteImport
       parentRoute: typeof AccountRoute
     }
+    '/account/profile': {
+      id: '/account/profile'
+      path: '/profile'
+      fullPath: '/account/profile'
+      preLoaderRoute: typeof AccountProfileRouteImport
+      parentRoute: typeof AccountRoute
+    }
     '/account/reservations': {
       id: '/account/reservations'
       path: '/reservations'
@@ -312,12 +331,14 @@ declare module '@tanstack/react-router' {
 
 interface AccountRouteChildren {
   AccountLoyaltyRoute: typeof AccountLoyaltyRoute
+  AccountProfileRoute: typeof AccountProfileRoute
   AccountReservationsRoute: typeof AccountReservationsRoute
   AccountIndexRoute: typeof AccountIndexRoute
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
   AccountLoyaltyRoute: AccountLoyaltyRoute,
+  AccountProfileRoute: AccountProfileRoute,
   AccountReservationsRoute: AccountReservationsRoute,
   AccountIndexRoute: AccountIndexRoute,
 }
