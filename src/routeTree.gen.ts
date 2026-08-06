@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BrandsRouteImport } from './routes/brands'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -19,6 +21,14 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountLoyaltyRouteImport } from './routes/account.loyalty'
+import { Route as AccountProfileRouteImport } from './routes/account.profile'
+import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminGuestsRouteImport } from './routes/admin.guests'
+import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,6 +38,16 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrandsRoute = BrandsRouteImport.update({
@@ -70,10 +90,52 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountIndexRoute = AccountIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountLoyaltyRoute = AccountLoyaltyRouteImport.update({
+  id: '/loyalty',
+  path: '/loyalty',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountProfileRoute = AccountProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountReservationsRoute = AccountReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventsRoute = AdminEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGuestsRoute = AdminGuestsRouteImport.update({
+  id: '/guests',
+  path: '/guests',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReservationsRoute = AdminReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
   '/brands': typeof BrandsRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -82,6 +144,14 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/reservations': typeof AccountReservationsRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/account/': typeof AccountIndexRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,11 +164,21 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/reservations': typeof AccountReservationsRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/account': typeof AccountIndexRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
   '/brands': typeof BrandsRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -107,12 +187,22 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
+  '/account/loyalty': typeof AccountLoyaltyRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/reservations': typeof AccountReservationsRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/guests': typeof AdminGuestsRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/account/': typeof AccountIndexRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/account'
+    | '/admin'
     | '/brands'
     | '/careers'
     | '/contact'
@@ -121,6 +211,14 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/loyalty'
+    | '/account/profile'
+    | '/account/reservations'
+    | '/admin/events'
+    | '/admin/guests'
+    | '/admin/reservations'
+    | '/account/'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,10 +231,20 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/loyalty'
+    | '/account/profile'
+    | '/account/reservations'
+    | '/admin/events'
+    | '/admin/guests'
+    | '/admin/reservations'
+    | '/account'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/account'
+    | '/admin'
     | '/brands'
     | '/careers'
     | '/contact'
@@ -145,11 +253,21 @@ export interface FileRouteTypes {
     | '/news'
     | '/reservation'
     | '/services'
+    | '/account/loyalty'
+    | '/account/profile'
+    | '/account/reservations'
+    | '/admin/events'
+    | '/admin/guests'
+    | '/admin/reservations'
+    | '/account/'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AccountRoute: typeof AccountRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
   BrandsRoute: typeof BrandsRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
@@ -174,6 +292,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brands': {
@@ -232,12 +364,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/': {
+      id: '/account/'
+      path: '/'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AccountIndexRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/loyalty': {
+      id: '/account/loyalty'
+      path: '/loyalty'
+      fullPath: '/account/loyalty'
+      preLoaderRoute: typeof AccountLoyaltyRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/profile': {
+      id: '/account/profile'
+      path: '/profile'
+      fullPath: '/account/profile'
+      preLoaderRoute: typeof AccountProfileRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/reservations': {
+      id: '/account/reservations'
+      path: '/reservations'
+      fullPath: '/account/reservations'
+      preLoaderRoute: typeof AccountReservationsRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/events': {
+      id: '/admin/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminEventsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/guests': {
+      id: '/admin/guests'
+      path: '/guests'
+      fullPath: '/admin/guests'
+      preLoaderRoute: typeof AdminGuestsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reservations': {
+      id: '/admin/reservations'
+      path: '/reservations'
+      fullPath: '/admin/reservations'
+      preLoaderRoute: typeof AdminReservationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AccountRouteChildren {
+  AccountLoyaltyRoute: typeof AccountLoyaltyRoute
+  AccountProfileRoute: typeof AccountProfileRoute
+  AccountReservationsRoute: typeof AccountReservationsRoute
+  AccountIndexRoute: typeof AccountIndexRoute
+}
+
+const AccountRouteChildren: AccountRouteChildren = {
+  AccountLoyaltyRoute: AccountLoyaltyRoute,
+  AccountProfileRoute: AccountProfileRoute,
+  AccountReservationsRoute: AccountReservationsRoute,
+  AccountIndexRoute: AccountIndexRoute,
+}
+
+const AccountRouteWithChildren =
+  AccountRoute._addFileChildren(AccountRouteChildren)
+
+interface AdminRouteChildren {
+  AdminEventsRoute: typeof AdminEventsRoute
+  AdminGuestsRoute: typeof AdminGuestsRoute
+  AdminReservationsRoute: typeof AdminReservationsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminEventsRoute: AdminEventsRoute,
+  AdminGuestsRoute: AdminGuestsRoute,
+  AdminReservationsRoute: AdminReservationsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AccountRoute: AccountRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   BrandsRoute: BrandsRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
