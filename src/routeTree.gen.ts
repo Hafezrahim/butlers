@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as ServicesRouteImport } from './routes/services'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +60,11 @@ const NewsRoute = NewsRouteImport.update({
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReservationRoute = ReservationRouteImport.update({
+  id: '/reservation',
+  path: '/reservation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
+  '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
+  '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
+  '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/gallery'
     | '/news'
+    | '/reservation'
     | '/services'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/gallery'
     | '/news'
+    | '/reservation'
     | '/services'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/gallery'
     | '/news'
+    | '/reservation'
     | '/services'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
   NewsRoute: typeof NewsRoute
+  ReservationRoute: typeof ReservationRoute
   ServicesRoute: typeof ServicesRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reservation': {
+      id: '/reservation'
+      path: '/reservation'
+      fullPath: '/reservation'
+      preLoaderRoute: typeof ReservationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -224,8 +244,19 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
   NewsRoute: NewsRoute,
+  ReservationRoute: ReservationRoute,
   ServicesRoute: ServicesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
