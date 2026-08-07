@@ -100,8 +100,8 @@ function AdminReservations() {
                   <p>{r.date}</p>
                   <p className="text-xs text-muted-foreground">{r.time}</p>
                 </td>
-                <td className="py-3">{r.party}</td>
-                <td className="py-3"><StatusPill status={r.status} /></td>
+                <td className="py-3 pr-6">{r.party}</td>
+                <td className="py-3 pl-6"><StatusPill status={r.status} /></td>
                 <td className="py-3">
                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <button
