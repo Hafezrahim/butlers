@@ -43,7 +43,7 @@ function AdminSupport() {
               filter === f ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground hover:border-gold"
             }`}
           >
-            {isAr ? LABEL[f].ar : LABEL[f].en}
+            {isAr ? LABEL[f]!.ar : LABEL[f]!.en}
           </button>
         ))}
       </div>
@@ -60,10 +60,10 @@ function AdminSupport() {
             </div>
             <div className="flex items-center gap-2">
               <span className="rounded-full border border-border px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-                {isAr ? LABEL[x.priority].ar : LABEL[x.priority].en}
+                {isAr ? LABEL[x.priority]!.ar : LABEL[x.priority]!.en}
               </span>
               <span className={`rounded-full px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] ${STATUS_STYLE[x.status]}`}>
-                {isAr ? LABEL[x.status].ar : LABEL[x.status].en}
+                {isAr ? LABEL[x.status]!.ar : LABEL[x.status]!.en}
               </span>
               <button
                 onClick={() => toast(t(`Ticket ${x.id} opened`, `تم فتح التذكرة ${x.id}`))}
