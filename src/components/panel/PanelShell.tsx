@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Bell, LogOut, Search, TrendingDown, TrendingUp } from "lucide-react";
+import { Bell, CalendarCheck, CircleAlert, LifeBuoy, LogOut, Search, Settings, TrendingDown, TrendingUp, UserRound } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { STATUS_LABEL, type ResStatus } from "@/data/panel";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,12 @@ export function PanelShell({
   children: ReactNode;
 }) {
   const { isAr } = useI18n();
+  const [openMenu, setOpenMenu] = useState<null | "bell" | "user">(null);
+  const notifications = [
+    { icon: CalendarCheck, en: "9 reservations awaiting approval", ar: "٩ حجوزات بانتظار الموافقة", time: isAr ? "منذ ٥ د" : "5m ago", tone: "text-gold" },
+    { icon: LifeBuoy, en: "2 high-priority support tickets", ar: "تذكرتا دعم بأولوية عالية", time: isAr ? "منذ ٢٢ د" : "22m ago", tone: "text-tone-rose" },
+    { icon: CircleAlert, en: "Velvet Lounge is at 96% capacity tonight", ar: "فيلفيت لاونج بنسبة إشغال ٩٦٪ الليلة", time: isAr ? "منذ ساعة" : "1h ago", tone: "text-tone-sky" },
+  ];
 
   const groups: { key: string; labelEn: string; labelAr: string; items: PanelNavItem[] }[] = [];
   for (const item of nav) {
@@ -58,8 +64,10 @@ export function PanelShell({
               />
             </label>
 
+            <div className="relative">
             <button
               type="button"
+              onClick={() => setOpenMenu((v) => (v === "bell" ? null : "bell"))}
               aria-label={isAr ? "الإشعارات" : "Notifications"}
               className="relative rounded-2xl border border-white/15 bg-white/5 p-2.5 text-warm transition-colors hover:border-gold hover:text-gold"
             >
@@ -68,15 +76,52 @@ export function PanelShell({
                 3
               </span>
             </button>
+            {openMenu === "bell" && (
+              <div className="absolute end-0 top-full z-30 mt-2 w-80 rounded-2xl border border-border bg-card p-2 shadow-xl">
+                <p className="eyebrow px-3 py-2 text-[0.58rem]">{isAr ? "الإشعارات" : "Notifications"}</p>
+                {notifications.map((n) => (
+                  <div key={n.en} className="flex gap-3 rounded-xl px-3 py-2.5 hover:bg-muted">
+                    <n.icon className={cn("mt-0.5 size-4 shrink-0", n.tone)} />
+                    <div className="min-w-0">
+                      <p className="text-sm leading-snug">{isAr ? n.ar : n.en}</p>
+                      <p className="text-[0.68rem] text-muted-foreground">{n.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            </div>
 
-            <div className="flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-1.5">
+            <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenMenu((v) => (v === "user" ? null : "user"))}
+              className="flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-1.5 transition-colors hover:border-gold"
+            >
               <span className="grid size-9 place-items-center rounded-xl bg-gold font-button text-xs font-semibold text-foreground">
                 HR
               </span>
-              <div className="hidden leading-tight sm:block">
+              <div className="hidden text-start leading-tight sm:block">
                 <p className="text-sm text-warm">{isAr ? "حافظ رحيم" : "Hafez Rahim"}</p>
                 <p className="text-[0.68rem] text-white/55">{isAr ? "المالك" : "Owner"}</p>
               </div>
+            </button>
+            {openMenu === "user" && (
+              <div className="absolute end-0 top-full z-30 mt-2 w-56 rounded-2xl border border-border bg-card p-2 shadow-xl">
+                <Link to="/account/profile" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm hover:bg-muted">
+                  <UserRound className="size-4 text-muted-foreground" />
+                  {isAr ? "الملف الشخصي" : "My profile"}
+                </Link>
+                <Link to="/admin/settings" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm hover:bg-muted">
+                  <Settings className="size-4 text-muted-foreground" />
+                  {isAr ? "الإعدادات" : "Settings"}
+                </Link>
+                <Link to="/" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10">
+                  <LogOut className="size-4" />
+                  {isAr ? "تسجيل الخروج" : "Log out"}
+                </Link>
+              </div>
+            )}
             </div>
 
             <Link
