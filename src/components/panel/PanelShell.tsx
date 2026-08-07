@@ -256,7 +256,7 @@ const TONES: Record<StatTone, { bg: string; border: string; text: string; iconBg
 };
 
 const STATUS_CLASS: Record<ResStatus, string> = {
-  confirmed: "bg-primary/15 text-primary",
+  confirmed: "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200",
   pending: "bg-gold/20 text-gold",
   seated: "bg-muted text-foreground",
   cancelled: "bg-destructive/15 text-destructive",

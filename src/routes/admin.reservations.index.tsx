@@ -92,7 +92,8 @@ function AdminReservations() {
                   <p className="text-xs text-muted-foreground">{isAr ? r.branchAr : r.branch}</p>
                 </td>
                 <td className="py-3" dir="ltr">
-                  {r.date} · {r.time}
+                  <p>{r.date}</p>
+                  <p className="text-xs text-muted-foreground">{r.time}</p>
                 </td>
                 <td className="py-3">{r.party}</td>
                 <td className="py-3"><StatusPill status={r.status} /></td>
