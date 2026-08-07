@@ -1,12 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard, StatusPill } from "@/components/panel/PanelShell";
 import { ADMIN_RESERVATIONS, STATUS_LABEL, type ResStatus } from "@/data/panel";
 import { useI18n } from "@/i18n";
 
-export const Route = createFileRoute("/admin/reservations")({
+export const Route = createFileRoute("/admin/reservations/")({
   component: AdminReservations,
 });
 
@@ -14,6 +14,7 @@ const FILTERS: (ResStatus | "all")[] = ["all", "pending", "confirmed", "seated",
 
 function AdminReservations() {
   const { t, isAr } = useI18n();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<ResStatus | "all">("all");
   const [q, setQ] = useState("");
 
@@ -76,7 +77,11 @@ function AdminReservations() {
           </thead>
           <tbody className="divide-y divide-border">
             {rows.map((r) => (
-              <tr key={r.code}>
+              <tr
+                key={r.code}
+                onClick={() => navigate({ to: "/admin/reservations/$code", params: { code: r.code } })}
+                className="cursor-pointer transition-colors hover:bg-muted/50"
+              >
                 <td className="py-3 font-button text-xs" dir="ltr">{r.code}</td>
                 <td className="py-3">
                   <p>{isAr ? r.guestAr : r.guest}</p>
@@ -92,7 +97,7 @@ function AdminReservations() {
                 <td className="py-3">{r.party}</td>
                 <td className="py-3"><StatusPill status={r.status} /></td>
                 <td className="py-3">
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => toast(t(`Reservation ${r.code} confirmed`, `تم تأكيد الحجز ${r.code}`))}
                       className="rounded-xl border border-border px-3 py-1.5 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em]"
@@ -105,6 +110,7 @@ function AdminReservations() {
                     >
                       {t("Cancel", "إلغاء")}
                     </button>
+                    <ChevronRight className="size-4 text-muted-foreground rtl:rotate-180" />
                   </div>
                 </td>
               </tr>

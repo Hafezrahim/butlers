@@ -32,11 +32,12 @@ import { Route as AdminEventsRouteImport } from './routes/admin.events'
 import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
 import { Route as AdminGuestsRouteImport } from './routes/admin.guests'
 import { Route as AdminNewsRouteImport } from './routes/admin.news'
-import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminSupportRouteImport } from './routes/admin.support'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminReservationsIndexRouteImport } from './routes/admin.reservations.index'
+import { Route as AdminReservationsCodeRouteImport } from './routes/admin.reservations.$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -153,11 +154,6 @@ const AdminNewsRoute = AdminNewsRouteImport.update({
   path: '/news',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminReservationsRoute = AdminReservationsRouteImport.update({
-  id: '/reservations',
-  path: '/reservations',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminServicesRoute = AdminServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -176,6 +172,16 @@ const AdminSupportRoute = AdminSupportRouteImport.update({
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReservationsIndexRoute = AdminReservationsIndexRouteImport.update({
+  id: '/reservations/',
+  path: '/reservations/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReservationsCodeRoute = AdminReservationsCodeRouteImport.update({
+  id: '/reservations/$code',
+  path: '/reservations/$code',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -201,13 +207,14 @@ export interface FileRoutesByFullPath {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/reservations': typeof AdminReservationsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/support': typeof AdminSupportRoute
   '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/reservations/$code': typeof AdminReservationsCodeRoute
+  '/admin/reservations/': typeof AdminReservationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -229,13 +236,14 @@ export interface FileRoutesByTo {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/reservations': typeof AdminReservationsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/support': typeof AdminSupportRoute
   '/admin/users': typeof AdminUsersRoute
   '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/reservations/$code': typeof AdminReservationsCodeRoute
+  '/admin/reservations': typeof AdminReservationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -260,13 +268,14 @@ export interface FileRoutesById {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/reservations': typeof AdminReservationsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/support': typeof AdminSupportRoute
   '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/reservations/$code': typeof AdminReservationsCodeRoute
+  '/admin/reservations/': typeof AdminReservationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -292,13 +301,14 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/guests'
     | '/admin/news'
-    | '/admin/reservations'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/support'
     | '/admin/users'
     | '/account/'
     | '/admin/'
+    | '/admin/reservations/$code'
+    | '/admin/reservations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -320,13 +330,14 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/guests'
     | '/admin/news'
-    | '/admin/reservations'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/support'
     | '/admin/users'
     | '/account'
     | '/admin'
+    | '/admin/reservations/$code'
+    | '/admin/reservations'
   id:
     | '__root__'
     | '/'
@@ -350,13 +361,14 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/guests'
     | '/admin/news'
-    | '/admin/reservations'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/support'
     | '/admin/users'
     | '/account/'
     | '/admin/'
+    | '/admin/reservations/$code'
+    | '/admin/reservations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -537,13 +549,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/reservations': {
-      id: '/admin/reservations'
-      path: '/reservations'
-      fullPath: '/admin/reservations'
-      preLoaderRoute: typeof AdminReservationsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/services': {
       id: '/admin/services'
       path: '/services'
@@ -570,6 +575,20 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reservations/': {
+      id: '/admin/reservations/'
+      path: '/reservations'
+      fullPath: '/admin/reservations/'
+      preLoaderRoute: typeof AdminReservationsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reservations/$code': {
+      id: '/admin/reservations/$code'
+      path: '/reservations/$code'
+      fullPath: '/admin/reservations/$code'
+      preLoaderRoute: typeof AdminReservationsCodeRouteImport
       parentRoute: typeof AdminRoute
     }
   }
@@ -599,12 +618,13 @@ interface AdminRouteChildren {
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminGuestsRoute: typeof AdminGuestsRoute
   AdminNewsRoute: typeof AdminNewsRoute
-  AdminReservationsRoute: typeof AdminReservationsRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminSupportRoute: typeof AdminSupportRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminReservationsCodeRoute: typeof AdminReservationsCodeRoute
+  AdminReservationsIndexRoute: typeof AdminReservationsIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -614,12 +634,13 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminGalleryRoute: AdminGalleryRoute,
   AdminGuestsRoute: AdminGuestsRoute,
   AdminNewsRoute: AdminNewsRoute,
-  AdminReservationsRoute: AdminReservationsRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminSupportRoute: AdminSupportRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminReservationsCodeRoute: AdminReservationsCodeRoute,
+  AdminReservationsIndexRoute: AdminReservationsIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
