@@ -130,7 +130,7 @@ function ReservationDetail() {
                 {reservation.addons.length === 0 && (
                   <span className="text-sm text-muted-foreground">{t("None", "لا يوجد")}</span>
                 )}
-                {reservation.addons.map((a) => (
+                {reservation.addons.map((a: { en: string; ar: string }) => (
                   <span key={a.en} className="rounded-full border border-border px-3 py-1 text-xs">
                     {isAr ? a.ar : a.en}
                   </span>
