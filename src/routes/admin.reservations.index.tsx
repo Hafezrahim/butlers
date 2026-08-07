@@ -68,8 +68,13 @@ function AdminReservations() {
                 t("Pax", "الأفراد"),
                 t("Status", "الحالة"),
                 t("Actions", "إجراءات"),
-              ].map((h) => (
-                <th key={h} className="py-3 text-start font-button text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              ].map((h, i) => (
+                <th
+                  key={h}
+                  className={`py-3 text-start font-button text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground ${
+                    i === 4 ? "pr-6" : i === 5 ? "pl-6" : ""
+                  }`}
+                >
                   {h}
                 </th>
               ))}
