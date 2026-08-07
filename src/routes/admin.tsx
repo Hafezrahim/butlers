@@ -1,5 +1,18 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { CalendarCheck, LayoutDashboard, PartyPopper, Users } from "lucide-react";
+import {
+  Briefcase,
+  CalendarCheck,
+  Images,
+  LayoutDashboard,
+  LifeBuoy,
+  Newspaper,
+  PartyPopper,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  Store,
+  Users,
+} from "lucide-react";
 import { PanelShell, type PanelNavItem } from "@/components/panel/PanelShell";
 import { useI18n } from "@/i18n";
 
@@ -17,10 +30,18 @@ export const Route = createFileRoute("/admin")({
 });
 
 const NAV: PanelNavItem[] = [
-  { to: "/admin", label: "Dashboard", labelAr: "لوحة التحكم", icon: LayoutDashboard },
-  { to: "/admin/reservations", label: "Reservations", labelAr: "الحجوزات", icon: CalendarCheck },
-  { to: "/admin/events", label: "Events", labelAr: "الفعاليات", icon: PartyPopper },
-  { to: "/admin/guests", label: "Guests", labelAr: "الضيوف", icon: Users },
+  { to: "/admin", label: "Dashboard", labelAr: "لوحة التحكم", icon: LayoutDashboard, group: "Overview", groupAr: "نظرة عامة" },
+  { to: "/admin/reservations", label: "Reservations", labelAr: "الحجوزات", icon: CalendarCheck, group: "Operations", groupAr: "العمليات" },
+  { to: "/admin/events", label: "Events", labelAr: "الفعاليات", icon: PartyPopper, group: "Operations", groupAr: "العمليات" },
+  { to: "/admin/guests", label: "Guests", labelAr: "الضيوف", icon: Users, group: "Operations", groupAr: "العمليات" },
+  { to: "/admin/support", label: "Support", labelAr: "الدعم", icon: LifeBuoy, group: "Operations", groupAr: "العمليات" },
+  { to: "/admin/brands", label: "Brands", labelAr: "العلامات", icon: Store, group: "Content", groupAr: "المحتوى" },
+  { to: "/admin/services", label: "Services", labelAr: "الخدمات", icon: Sparkles, group: "Content", groupAr: "المحتوى" },
+  { to: "/admin/gallery", label: "Gallery", labelAr: "معرض الصور", icon: Images, group: "Content", groupAr: "المحتوى" },
+  { to: "/admin/careers", label: "Careers", labelAr: "الوظائف", icon: Briefcase, group: "Content", groupAr: "المحتوى" },
+  { to: "/admin/news", label: "News", labelAr: "الأخبار", icon: Newspaper, group: "Content", groupAr: "المحتوى" },
+  { to: "/admin/users", label: "Users & Roles", labelAr: "المستخدمون والصلاحيات", icon: ShieldCheck, group: "System", groupAr: "النظام" },
+  { to: "/admin/settings", label: "Settings", labelAr: "الإعدادات", icon: Settings, group: "System", groupAr: "النظام" },
 ];
 
 function AdminLayout() {

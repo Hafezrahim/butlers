@@ -26,9 +26,17 @@ import { Route as AccountLoyaltyRouteImport } from './routes/account.loyalty'
 import { Route as AccountProfileRouteImport } from './routes/account.profile'
 import { Route as AccountReservationsRouteImport } from './routes/account.reservations'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBrandsRouteImport } from './routes/admin.brands'
+import { Route as AdminCareersRouteImport } from './routes/admin.careers'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
 import { Route as AdminGuestsRouteImport } from './routes/admin.guests'
+import { Route as AdminNewsRouteImport } from './routes/admin.news'
 import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -115,9 +123,24 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBrandsRoute = AdminBrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCareersRoute = AdminCareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminEventsRoute = AdminEventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminGuestsRoute = AdminGuestsRouteImport.update({
@@ -125,9 +148,34 @@ const AdminGuestsRoute = AdminGuestsRouteImport.update({
   path: '/guests',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminNewsRoute = AdminNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminReservationsRoute = AdminReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -147,9 +195,17 @@ export interface FileRoutesByFullPath {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/careers': typeof AdminCareersRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/news': typeof AdminNewsRoute
   '/admin/reservations': typeof AdminReservationsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -167,9 +223,17 @@ export interface FileRoutesByTo {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/careers': typeof AdminCareersRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/news': typeof AdminNewsRoute
   '/admin/reservations': typeof AdminReservationsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/users': typeof AdminUsersRoute
   '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -190,9 +254,17 @@ export interface FileRoutesById {
   '/account/loyalty': typeof AccountLoyaltyRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/reservations': typeof AccountReservationsRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/careers': typeof AdminCareersRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/news': typeof AdminNewsRoute
   '/admin/reservations': typeof AdminReservationsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -214,9 +286,17 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/brands'
+    | '/admin/careers'
     | '/admin/events'
+    | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/news'
     | '/admin/reservations'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/users'
     | '/account/'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -234,9 +314,17 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/brands'
+    | '/admin/careers'
     | '/admin/events'
+    | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/news'
     | '/admin/reservations'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/users'
     | '/account'
     | '/admin'
   id:
@@ -256,9 +344,17 @@ export interface FileRouteTypes {
     | '/account/loyalty'
     | '/account/profile'
     | '/account/reservations'
+    | '/admin/brands'
+    | '/admin/careers'
     | '/admin/events'
+    | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/news'
     | '/admin/reservations'
+    | '/admin/services'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/users'
     | '/account/'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -399,11 +495,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/brands': {
+      id: '/admin/brands'
+      path: '/brands'
+      fullPath: '/admin/brands'
+      preLoaderRoute: typeof AdminBrandsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/careers': {
+      id: '/admin/careers'
+      path: '/careers'
+      fullPath: '/admin/careers'
+      preLoaderRoute: typeof AdminCareersRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/events': {
       id: '/admin/events'
       path: '/events'
       fullPath: '/admin/events'
       preLoaderRoute: typeof AdminEventsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/guests': {
@@ -413,11 +530,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGuestsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/news': {
+      id: '/admin/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminNewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/reservations': {
       id: '/admin/reservations'
       path: '/reservations'
       fullPath: '/admin/reservations'
       preLoaderRoute: typeof AdminReservationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
   }
@@ -441,16 +593,32 @@ const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
 
 interface AdminRouteChildren {
+  AdminBrandsRoute: typeof AdminBrandsRoute
+  AdminCareersRoute: typeof AdminCareersRoute
   AdminEventsRoute: typeof AdminEventsRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
   AdminGuestsRoute: typeof AdminGuestsRoute
+  AdminNewsRoute: typeof AdminNewsRoute
   AdminReservationsRoute: typeof AdminReservationsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBrandsRoute: AdminBrandsRoute,
+  AdminCareersRoute: AdminCareersRoute,
   AdminEventsRoute: AdminEventsRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
   AdminGuestsRoute: AdminGuestsRoute,
+  AdminNewsRoute: AdminNewsRoute,
   AdminReservationsRoute: AdminReservationsRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
