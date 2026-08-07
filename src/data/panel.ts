@@ -138,3 +138,36 @@ export const ADMIN_EVENTS = [
   { title: "Chef's Tasting Menu", titleAr: "قائمة تذوق الشيف", date: "2026-08-27", venue: "The Butler's Table", venueAr: "طاولة البتلر", seats: 40, booked: 40, status: "sold out" },
   { title: "Autumn Garden Brunch", titleAr: "برانش حديقة الخريف", date: "2026-09-05", venue: "Butlers Garden", venueAr: "حديقة بتلرز", seats: 90, booked: 21, status: "draft" },
 ];
+export const ADMIN_TICKETS = [
+  { id: "TCK-1042", subject: "Late seating at Zamalek", subjectAr: "تأخير الجلوس في الزمالك", guest: "Nour Adel", guestAr: "نور عادل", channel: "WhatsApp", channelAr: "واتساب", priority: "high", status: "open", updated: "2026-08-06" },
+  { id: "TCK-1039", subject: "Invoice copy request", subjectAr: "طلب نسخة فاتورة", guest: "Karim Fouad", guestAr: "كريم فؤاد", channel: "Email", channelAr: "بريد إلكتروني", priority: "low", status: "pending", updated: "2026-08-05" },
+  { id: "TCK-1035", subject: "Allergy note not applied", subjectAr: "لم يتم تطبيق ملاحظة الحساسية", guest: "Layla Mostafa", guestAr: "ليلى مصطفى", channel: "Phone", channelAr: "هاتف", priority: "high", status: "resolved", updated: "2026-08-03" },
+  { id: "TCK-1028", subject: "Event deposit refund", subjectAr: "استرداد عربون فعالية", guest: "Hafez Rahim", guestAr: "حافظ رحيم", channel: "Web form", channelAr: "نموذج الموقع", priority: "medium", status: "open", updated: "2026-08-02" },
+];
+
+export const ADMIN_USERS = [
+  { name: "Hafez Rahim", nameAr: "حافظ رحيم", email: "hafez@butlersco.com", role: "Owner", roleAr: "المالك", status: "active" },
+  { name: "Sara Kamal", nameAr: "سارة كمال", email: "sara@butlersco.com", role: "Operations Manager", roleAr: "مدير العمليات", status: "active" },
+  { name: "Omar Tarek", nameAr: "عمر طارق", email: "omar@butlersco.com", role: "Reservations", roleAr: "الحجوزات", status: "active" },
+  { name: "Mona Saleh", nameAr: "منى صالح", email: "mona@butlersco.com", role: "Content Editor", roleAr: "محرر المحتوى", status: "invited" },
+];
+
+export const ROLE_MATRIX = [
+  { area: "Reservations", areaAr: "الحجوزات", owner: true, manager: true, reservations: true, editor: false },
+  { area: "Brands & Services", areaAr: "العلامات والخدمات", owner: true, manager: true, reservations: false, editor: true },
+  { area: "Events & Gallery", areaAr: "الفعاليات والمعرض", owner: true, manager: true, reservations: false, editor: true },
+  { area: "Careers & News", areaAr: "الوظائف والأخبار", owner: true, manager: false, reservations: false, editor: true },
+  { area: "Users & Settings", areaAr: "المستخدمون والإعدادات", owner: true, manager: false, reservations: false, editor: false },
+];
+
+export const ADMIN_APPLICATIONS = [
+  { name: "Ahmed Sabry", nameAr: "أحمد صبري", role: "Head Bartender", roleAr: "رئيس بار", venue: "Velvet Lounge", venueAr: "فيلفيت لاونج", date: "2026-08-04", status: "review" },
+  { name: "Mariam Adel", nameAr: "مريم عادل", role: "Sous Chef", roleAr: "مساعد شيف", venue: "The Butler's Table", venueAr: "طاولة البتلر", date: "2026-08-02", status: "interview" },
+  { name: "Youssef Hany", nameAr: "يوسف هاني", role: "Guest Relations", roleAr: "علاقات الضيوف", venue: "Butlers Catering", venueAr: "بتلرز للضيافة", date: "2026-07-29", status: "hired" },
+];
+
+export const ADMIN_POSTS = [
+  { title: "Butlers & Co opens Maison Verte", titleAr: "بتلرز آند كو تفتتح ميزون فيرت", category: "Openings", categoryAr: "افتتاحات", date: "2026-08-01", status: "published" },
+  { title: "Our 2026 sustainability pledge", titleAr: "تعهد الاستدامة ٢٠٢٦", category: "Company", categoryAr: "الشركة", date: "2026-07-18", status: "published" },
+  { title: "Autumn menu preview", titleAr: "معاينة قائمة الخريف", category: "Culinary", categoryAr: "الطهي", date: "2026-08-06", status: "draft" },
+];
