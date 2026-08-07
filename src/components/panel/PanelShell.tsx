@@ -40,9 +40,17 @@ export function PanelShell({
   return (
     <div className="bg-background">
       <div className="ink-panel border-b border-white/10">
-        <div className="container-site py-10">
-          <p className="eyebrow">{subtitle}</p>
-          <h1 className="mt-2 text-3xl text-warm md:text-4xl">{title}</h1>
+        <div className="container-site flex flex-wrap items-end justify-between gap-4 py-10">
+          <div>
+            <p className="eyebrow">{subtitle}</p>
+            <h1 className="mt-2 text-3xl text-warm md:text-4xl">{title}</h1>
+          </div>
+          <Link
+            to="/"
+            className="rounded-2xl border border-white/20 px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-warm transition-colors hover:border-gold hover:text-gold"
+          >
+            {isAr ? "العودة للموقع" : "Back to site"}
+          </Link>
         </div>
       </div>
 
