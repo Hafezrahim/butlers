@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
+import { Bell, LogOut, Search, TrendingDown, TrendingUp } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { STATUS_LABEL, type ResStatus } from "@/data/panel";
+import { cn } from "@/lib/utils";
 
 export type PanelNavItem = {
   to: string;
@@ -40,17 +42,51 @@ export function PanelShell({
   return (
     <div className="bg-background">
       <div className="ink-panel border-b border-white/10">
-        <div className="container-site flex flex-wrap items-end justify-between gap-4 py-10">
-          <div>
+        <div className="container-site flex flex-wrap items-center justify-between gap-4 py-6 md:py-8">
+          <div className="min-w-0">
             <p className="eyebrow">{subtitle}</p>
-            <h1 className="mt-2 text-3xl text-warm md:text-4xl">{title}</h1>
+            <h1 className="mt-2 truncate text-2xl text-warm md:text-4xl">{title}</h1>
           </div>
-          <Link
-            to="/"
-            className="rounded-2xl border border-white/20 px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-warm transition-colors hover:border-gold hover:text-gold"
-          >
-            {isAr ? "العودة للموقع" : "Back to site"}
-          </Link>
+
+          <div className="flex flex-wrap items-center gap-2 md:gap-3">
+            <label className="hidden items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-warm lg:flex">
+              <Search className="size-4 text-gold" />
+              <input
+                type="search"
+                placeholder={isAr ? "بحث سريع…" : "Quick search…"}
+                className="w-40 bg-transparent text-sm text-warm outline-none placeholder:text-white/45"
+              />
+            </label>
+
+            <button
+              type="button"
+              aria-label={isAr ? "الإشعارات" : "Notifications"}
+              className="relative rounded-2xl border border-white/15 bg-white/5 p-2.5 text-warm transition-colors hover:border-gold hover:text-gold"
+            >
+              <Bell className="size-4" />
+              <span className="absolute -end-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-[0.55rem] font-semibold text-destructive-foreground">
+                3
+              </span>
+            </button>
+
+            <div className="flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-1.5">
+              <span className="grid size-9 place-items-center rounded-xl bg-gold font-button text-xs font-semibold text-foreground">
+                HR
+              </span>
+              <div className="hidden leading-tight sm:block">
+                <p className="text-sm text-warm">{isAr ? "حافظ رحيم" : "Hafez Rahim"}</p>
+                <p className="text-[0.68rem] text-white/55">{isAr ? "المالك" : "Owner"}</p>
+              </div>
+            </div>
+
+            <Link
+              to="/"
+              aria-label={isAr ? "تسجيل الخروج" : "Log out"}
+              className="rounded-2xl border border-white/15 bg-white/5 p-2.5 text-warm transition-colors hover:border-destructive hover:text-destructive"
+            >
+              <LogOut className="size-4" />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -112,23 +148,67 @@ export function StatCard({
   value,
   hint,
   icon: Icon,
+  tone = "gold",
+  trend,
+  progress,
 }: {
   label: string;
   value: string;
   hint?: string;
   icon: LucideIcon;
+  tone?: StatTone;
+  trend?: number;
+  progress?: number;
 }) {
+  const t = TONES[tone];
   return (
-    <div className="rounded-2xl border border-border bg-card p-5">
-      <div className="flex items-center justify-between">
+    <div
+      className={cn(
+        "group relative overflow-hidden rounded-2xl border p-5 transition-shadow hover:shadow-lg",
+        t.border,
+        t.bg,
+      )}
+    >
+      <div className={cn("absolute -end-8 -top-8 size-24 rounded-full blur-2xl opacity-60", t.glow)} />
+      <div className="relative flex items-start justify-between gap-3">
         <p className="eyebrow text-[0.62rem]">{label}</p>
-        <Icon className="size-4 text-gold" />
+        <span className={cn("grid size-9 shrink-0 place-items-center rounded-xl", t.iconBg)}>
+          <Icon className={cn("size-4", t.text)} />
+        </span>
       </div>
-      <p className="mt-3 font-display text-3xl">{value}</p>
-      {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
+      <p className="relative mt-3 font-display text-3xl">{value}</p>
+      <div className="relative mt-1 flex flex-wrap items-center gap-2">
+        {typeof trend === "number" && (
+          <span
+            className={cn(
+              "inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-button text-[0.6rem] font-semibold",
+              trend >= 0 ? "bg-tone-emerald/15 text-tone-emerald" : "bg-destructive/15 text-destructive",
+            )}
+          >
+            {trend >= 0 ? <TrendingUp className="size-3" /> : <TrendingDown className="size-3" />}
+            <span dir="ltr">{trend > 0 ? `+${trend}` : trend}%</span>
+          </span>
+        )}
+        {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      </div>
+      {typeof progress === "number" && (
+        <div className="relative mt-4 h-1.5 w-full overflow-hidden rounded-full bg-foreground/10">
+          <div className={cn("h-full rounded-full", t.bar)} style={{ width: `${progress}%` }} />
+        </div>
+      )}
     </div>
   );
 }
+
+export type StatTone = "gold" | "emerald" | "plum" | "sky" | "rose";
+
+const TONES: Record<StatTone, { bg: string; border: string; text: string; iconBg: string; bar: string; glow: string }> = {
+  gold: { bg: "bg-gold/8", border: "border-gold/25", text: "text-gold", iconBg: "bg-gold/15", bar: "bg-gold", glow: "bg-gold/25" },
+  emerald: { bg: "bg-tone-emerald/8", border: "border-tone-emerald/25", text: "text-tone-emerald", iconBg: "bg-tone-emerald/15", bar: "bg-tone-emerald", glow: "bg-tone-emerald/25" },
+  plum: { bg: "bg-tone-plum/8", border: "border-tone-plum/25", text: "text-tone-plum", iconBg: "bg-tone-plum/15", bar: "bg-tone-plum", glow: "bg-tone-plum/25" },
+  sky: { bg: "bg-tone-sky/8", border: "border-tone-sky/25", text: "text-tone-sky", iconBg: "bg-tone-sky/15", bar: "bg-tone-sky", glow: "bg-tone-sky/25" },
+  rose: { bg: "bg-tone-rose/8", border: "border-tone-rose/25", text: "text-tone-rose", iconBg: "bg-tone-rose/15", bar: "bg-tone-rose", glow: "bg-tone-rose/25" },
+};
 
 const STATUS_CLASS: Record<ResStatus, string> = {
   confirmed: "bg-primary/15 text-primary",
