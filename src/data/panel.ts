@@ -12,6 +12,7 @@ export type PanelReservation = {
   guest: string;
   guestAr: string;
   phone: string;
+  email: string;
   brand: string;
   brandAr: string;
   branch: string;
@@ -29,6 +30,7 @@ export const MY_RESERVATIONS: PanelReservation[] = [
     guest: "Hafez Rahim",
     guestAr: "حافظ رحيم",
     phone: "+20 100 741 9344",
+    email: "hafez.rahim@email.com",
     brand: "The Butler's Table",
     brandAr: "طاولة البتلر",
     branch: "Zamalek",
@@ -47,6 +49,7 @@ export const MY_RESERVATIONS: PanelReservation[] = [
     guest: "Hafez Rahim",
     guestAr: "حافظ رحيم",
     phone: "+20 100 741 9344",
+    email: "hafez.rahim@email.com",
     brand: "Velvet Lounge",
     brandAr: "فيلفيت لاونج",
     branch: "New Cairo",
@@ -62,6 +65,7 @@ export const MY_RESERVATIONS: PanelReservation[] = [
     guest: "Hafez Rahim",
     guestAr: "حافظ رحيم",
     phone: "+20 100 741 9344",
+    email: "hafez.rahim@email.com",
     brand: "Butlers Catering",
     brandAr: "بتلرز للضيافة",
     branch: "Sheikh Zayed",
@@ -81,6 +85,7 @@ export const ADMIN_RESERVATIONS: PanelReservation[] = [
     guest: "Nour Adel",
     guestAr: "نور عادل",
     phone: "+20 111 220 5566",
+    email: "nour.adel@email.com",
     brand: "The Butler's Table",
     brandAr: "طاولة البتلر",
     branch: "Zamalek",
@@ -96,6 +101,7 @@ export const ADMIN_RESERVATIONS: PanelReservation[] = [
     guest: "Karim Fouad",
     guestAr: "كريم فؤاد",
     phone: "+20 122 887 3311",
+    email: "karim.fouad@email.com",
     brand: "Velvet Lounge",
     brandAr: "فيلفيت لاونج",
     branch: "New Cairo",
@@ -111,6 +117,7 @@ export const ADMIN_RESERVATIONS: PanelReservation[] = [
     guest: "Layla Mostafa",
     guestAr: "ليلى مصطفى",
     phone: "+20 106 334 9090",
+    email: "layla.mostafa@email.com",
     brand: "Butlers Catering",
     brandAr: "بتلرز للضيافة",
     branch: "Sheikh Zayed",
