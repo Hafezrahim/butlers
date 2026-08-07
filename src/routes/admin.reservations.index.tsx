@@ -6,7 +6,7 @@ import { PanelCard, StatusPill } from "@/components/panel/PanelShell";
 import { ADMIN_RESERVATIONS, STATUS_LABEL, type ResStatus } from "@/data/panel";
 import { useI18n } from "@/i18n";
 
-export const Route = createFileRoute("/admin/reservations")({
+export const Route = createFileRoute("/admin/reservations/")({
   component: AdminReservations,
 });
 
