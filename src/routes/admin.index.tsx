@@ -245,7 +245,78 @@ function AdminDashboard() {
         </PanelCard>
       </div>
 
-      <PanelCard title={t("Latest reservations", "أحدث الحجوزات")}>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <PanelCard
+          title={t("Operations checklist", "قائمة مهام التشغيل")}
+          action={
+            <span className="font-button text-[0.62rem] uppercase tracking-[0.1em] text-muted-foreground" dir="ltr">
+              {doneCount}/{tasks.length}
+            </span>
+          }
+        >
+          <ul className="space-y-2">
+            {tasks.map((task) => (
+              <li key={task.id}>
+                <button
+                  type="button"
+                  onClick={() => setTasks((prev) => prev.map((x) => (x.id === task.id ? { ...x, done: !x.done } : x)))}
+                  className="flex w-full items-center gap-3 rounded-2xl border border-border p-3 text-start transition-colors hover:border-gold"
+                >
+                  <span
+                    className={`grid size-5 shrink-0 place-items-center rounded-md border ${
+                      task.done ? "border-transparent bg-tone-emerald text-warm" : "border-border"
+                    }`}
+                  >
+                    {task.done && <Check className="size-3.5" />}
+                  </span>
+                  <span className={`text-sm ${task.done ? "text-muted-foreground line-through" : ""}`}>
+                    {isAr ? task.ar : task.en}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </PanelCard>
+
+        <PanelCard
+          title={t("Top guests", "أفضل الضيوف")}
+          action={
+            <Link to="/admin/guests" className="font-button text-[0.62rem] uppercase tracking-[0.1em] text-gold">
+              {t("View all", "عرض الكل")}
+            </Link>
+          }
+        >
+          <div className="divide-y divide-border">
+            {topGuests.map((g: any) => (
+              <div key={g.name} className="flex items-center justify-between gap-3 py-3">
+                <div className="flex items-center gap-3">
+                  <span className="grid size-9 place-items-center rounded-xl bg-primary/10 font-button text-[0.7rem] font-semibold text-primary">
+                    {(isAr ? g.nameAr ?? g.name : g.name).slice(0, 2)}
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium">{isAr ? g.nameAr ?? g.name : g.name}</p>
+                    <p className="text-xs text-muted-foreground" dir="ltr">
+                      {g.visits} {t("visits", "زيارة")} · {g.tier}
+                    </p>
+                  </div>
+                </div>
+                <span className="font-display text-lg text-gold" dir="ltr">
+                  EGP {Number(g.spend).toLocaleString("en-US")}
+                </span>
+              </div>
+            ))}
+          </div>
+        </PanelCard>
+      </div>
+
+      <PanelCard
+        title={t("Latest reservations", "أحدث الحجوزات")}
+        action={
+          <Link to="/admin/reservations" className="font-button text-[0.62rem] uppercase tracking-[0.1em] text-gold">
+            {t("Manage", "إدارة")}
+          </Link>
+        }
+      >
         <div className="divide-y divide-border">
           {latest.map((r) => (
             <div key={r.code} className="flex flex-wrap items-center justify-between gap-3 py-3">
@@ -255,7 +326,35 @@ function AdminDashboard() {
                   {isAr ? r.brandAr : r.brand} · <span dir="ltr">{r.date}</span> · <span dir="ltr">{r.time}</span> · {r.party} {t("pax", "أفراد")}
                 </p>
               </div>
-              <StatusPill status={r.status} />
+              <div className="flex items-center gap-2">
+                <StatusPill status={handled[r.code] ?? r.status} />
+                {(handled[r.code] ?? r.status) === "pending" && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label={t("Approve", "اعتماد")}
+                      onClick={() => {
+                        setHandled((p) => ({ ...p, [r.code]: "confirmed" }));
+                        toast.success(t("Reservation confirmed", "تم تأكيد الحجز"));
+                      }}
+                      className="rounded-xl border border-border p-2 text-tone-emerald transition-colors hover:border-tone-emerald"
+                    >
+                      <Check className="size-4" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={t("Decline", "رفض")}
+                      onClick={() => {
+                        setHandled((p) => ({ ...p, [r.code]: "cancelled" }));
+                        toast(t("Reservation cancelled", "تم إلغاء الحجز"));
+                      }}
+                      className="rounded-xl border border-border p-2 text-destructive transition-colors hover:border-destructive"
+                    >
+                      <X className="size-4" />
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
