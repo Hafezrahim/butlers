@@ -11,8 +11,6 @@ export const NAV_LINKS = [
   { to: "/services", label: "Services", labelAr: "خدماتنا" },
   { to: "/events", label: "Events", labelAr: "الفعاليات" },
   { to: "/gallery", label: "Gallery", labelAr: "معرض الصور" },
-  { to: "/careers", label: "Careers", labelAr: "الوظائف" },
-  { to: "/news", label: "News", labelAr: "الأخبار" },
   { to: "/contact", label: "Contact", labelAr: "تواصل معنا" },
 ] as const;
 
