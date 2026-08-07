@@ -87,10 +87,10 @@ function AdminDashboard() {
   const [handled, setHandled] = useState<Record<string, "confirmed" | "cancelled">>({});
   const active = RANGES.find((r) => r.key === range)!;
   const latest = ADMIN_RESERVATIONS.slice(-5).reverse();
-  const topGuests = useMemo(
-    () => [...ADMIN_GUESTS].sort((a, b) => (b as any).spend - (a as any).spend).slice(0, 4),
-    [],
-  );
+  const topGuests = useMemo(() => {
+    const num = (s: string) => Number(s.replace(/[^\d]/g, ""));
+    return [...ADMIN_GUESTS].sort((a, b) => num(b.spend) - num(a.spend)).slice(0, 4);
+  }, []);
   const doneCount = tasks.filter((x) => x.done).length;
 
   return (
@@ -287,21 +287,21 @@ function AdminDashboard() {
           }
         >
           <div className="divide-y divide-border">
-            {topGuests.map((g: any) => (
+            {topGuests.map((g) => (
               <div key={g.name} className="flex items-center justify-between gap-3 py-3">
                 <div className="flex items-center gap-3">
                   <span className="grid size-9 place-items-center rounded-xl bg-primary/10 font-button text-[0.7rem] font-semibold text-primary">
-                    {(isAr ? g.nameAr ?? g.name : g.name).slice(0, 2)}
+                    {(isAr ? g.nameAr : g.name).slice(0, 2)}
                   </span>
                   <div>
-                    <p className="text-sm font-medium">{isAr ? g.nameAr ?? g.name : g.name}</p>
+                    <p className="text-sm font-medium">{isAr ? g.nameAr : g.name}</p>
                     <p className="text-xs text-muted-foreground" dir="ltr">
-                      {g.visits} {t("visits", "زيارة")} · {g.tier}
+                      {g.visits} {t("visits", "زيارة")} · {isAr ? g.tierAr : g.tier}
                     </p>
                   </div>
                 </div>
                 <span className="font-display text-lg text-gold" dir="ltr">
-                  EGP {Number(g.spend).toLocaleString("en-US")}
+                  {g.spend}
                 </span>
               </div>
             ))}
