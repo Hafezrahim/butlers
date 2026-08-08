@@ -118,7 +118,7 @@ function MyReservations() {
         onOpenChange={(v) => !v && setEditing(null)}
         title={t("Reschedule reservation", "تغيير موعد الحجز")}
         fields={RESCHEDULE_FIELDS}
-        initial={editing ? { date: editing.date, time: editing.time, party: editing.party } : undefined}
+        initial={{ date: editing?.date ?? "", time: editing?.time ?? "", party: editing?.party ?? 2 }}
         onSubmit={submitReschedule}
         submitLabel={t("Update", "تحديث")}
       />
