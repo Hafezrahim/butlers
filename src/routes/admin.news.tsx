@@ -1,31 +1,74 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { ADMIN_POSTS } from "@/data/panel";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { usePanelData, type PostRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/news")({
   component: AdminNews,
 });
 
+const FIELDS: CrudField[] = [
+  { key: "title", label: "Title", labelAr: "العنوان", required: true },
+  { key: "titleAr", label: "Title (Arabic)", labelAr: "العنوان (عربي)", required: true },
+  { key: "category", label: "Category", labelAr: "التصنيف" },
+  { key: "categoryAr", label: "Category (Arabic)", labelAr: "التصنيف (عربي)" },
+  { key: "date", label: "Date", labelAr: "التاريخ", type: "date" },
+  {
+    key: "status",
+    label: "Status",
+    labelAr: "الحالة",
+    type: "select",
+    options: [
+      { value: "published", label: "Published", labelAr: "منشور" },
+      { value: "draft", label: "Draft", labelAr: "مسودة" },
+    ],
+  },
+];
+
 function AdminNews() {
   const { t, isAr } = useI18n();
+  const { data, create, update, remove } = usePanelData();
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<PostRow | null>(null);
+
+  const openCreate = () => {
+    setEditing(null);
+    setOpen(true);
+  };
+  const openEdit = (row: PostRow) => {
+    setEditing(row);
+    setOpen(true);
+  };
+
+  const handleSubmit = (values: RecordValues) => {
+    const payload = {
+      title: String(values.title),
+      titleAr: String(values.titleAr),
+      category: String(values.category),
+      categoryAr: String(values.categoryAr),
+      date: String(values.date),
+      status: String(values.status),
+    };
+    if (editing) {
+      update("posts", editing.id, payload);
+      toast(t("Post updated", "تم تحديث المقال"));
+    } else {
+      create("posts", payload);
+      toast(t("Post created", "تم إنشاء المقال"));
+    }
+  };
 
   return (
     <PanelCard
       title={t("News & stories", "الأخبار والمقالات")}
-      action={
-        <button
-          onClick={() => toast(t("New post drafted", "تم إنشاء مسودة مقال"))}
-          className="rounded-2xl bg-gold px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground"
-        >
-          {t("New post", "مقال جديد")}
-        </button>
-      }
+      action={<AddButton onClick={openCreate} label={t("New post", "مقال جديد")} />}
     >
       <div className="divide-y divide-border">
-        {ADMIN_POSTS.map((p) => (
-          <div key={p.title} className="flex flex-wrap items-center justify-between gap-3 py-4">
+        {data.posts.map((p) => (
+          <div key={p.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
             <div className="min-w-0">
               <p className="font-display text-lg">{isAr ? p.titleAr : p.title}</p>
               <p className="text-xs text-muted-foreground">
@@ -40,16 +83,32 @@ function AdminNews() {
               >
                 {p.status === "published" ? t("Published", "منشور") : t("Draft", "مسودة")}
               </span>
-              <button
-                onClick={() => toast(t("Post opened", "تم فتح المقال"))}
-                className="rounded-xl border border-border px-3 py-1.5 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em]"
-              >
-                {t("Edit", "تعديل")}
-              </button>
+              <RowActions>
+                <EditButton onClick={() => openEdit(p)} />
+                <DeleteButton
+                  name={isAr ? p.titleAr : p.title}
+                  onConfirm={() => {
+                    remove("posts", p.id);
+                    toast(t("Post deleted", "تم حذف المقال"));
+                  }}
+                />
+              </RowActions>
             </div>
           </div>
         ))}
+        {data.posts.length === 0 && (
+          <p className="py-8 text-center text-sm text-muted-foreground">{t("No posts found", "لا توجد مقالات")}</p>
+        )}
       </div>
+
+      <CrudFormDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={editing ? t("Edit post", "تعديل المقال") : t("New post", "مقال جديد")}
+        fields={FIELDS}
+        initial={editing ?? undefined}
+        onSubmit={handleSubmit}
+      />
     </PanelCard>
   );
 }

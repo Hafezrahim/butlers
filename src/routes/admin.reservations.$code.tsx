@@ -1,17 +1,14 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, CalendarDays, Mail, Phone, Sparkles, Users } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard, StatusPill } from "@/components/panel/PanelShell";
-import { ADMIN_RESERVATIONS, STATUS_LABEL, type ResStatus } from "@/data/panel";
+import { CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { STATUS_LABEL, type ResStatus } from "@/data/panel";
+import { usePanelData, uid } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/reservations/$code")({
-  loader: ({ params }) => {
-    const reservation = ADMIN_RESERVATIONS.find((r) => r.code === params.code);
-    if (!reservation) throw notFound();
-    return { reservation };
-  },
   head: ({ params }) => ({
     meta: [
       { title: `Reservation ${params.code} — Butlers & Co Admin` },
@@ -19,51 +16,77 @@ export const Route = createFileRoute("/admin/reservations/$code")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  notFoundComponent: ReservationMissing,
   component: ReservationDetail,
 });
 
 const STATUSES: ResStatus[] = ["pending", "confirmed", "seated", "cancelled"];
 
-type Note = { id: number; author: string; text: string; at: string };
-
-function ReservationMissing() {
-  return (
-    <PanelCard title="Reservation not found">
-      <Link to="/admin/reservations" className="text-sm text-gold underline">
-        Back to reservations
-      </Link>
-    </PanelCard>
-  );
-}
+const FIELDS: CrudField[] = [
+  { key: "guest", label: "Guest name (EN)", labelAr: "اسم الضيف (EN)", required: true },
+  { key: "guestAr", label: "Guest name (AR)", labelAr: "اسم الضيف (AR)" },
+  { key: "phone", label: "Phone", labelAr: "الهاتف", required: true },
+  { key: "email", label: "Email", labelAr: "البريد الإلكتروني" },
+  { key: "brand", label: "House (EN)", labelAr: "العلامة (EN)" },
+  { key: "brandAr", label: "House (AR)", labelAr: "العلامة (AR)" },
+  { key: "branch", label: "Branch (EN)", labelAr: "الفرع (EN)" },
+  { key: "branchAr", label: "Branch (AR)", labelAr: "الفرع (AR)" },
+  { key: "date", label: "Date", labelAr: "التاريخ", type: "date" },
+  { key: "time", label: "Time", labelAr: "الوقت", type: "time" },
+  { key: "party", label: "Party size", labelAr: "عدد الأفراد", type: "number" },
+];
 
 function ReservationDetail() {
-  const { reservation } = Route.useLoaderData();
+  const { code } = Route.useParams();
   const { t, isAr } = useI18n();
-  const [status, setStatus] = useState<ResStatus>(reservation.status);
+  const navigate = Route.useNavigate();
+  const { data, create, update, remove } = usePanelData();
+  const reservation = data.reservations.find((r) => r.code === code);
   const [draft, setDraft] = useState("");
-  const [notes, setNotes] = useState<Note[]>([
-    {
-      id: 1,
-      author: t("Reservations desk", "مكتب الحجوزات"),
-      text: t("Guest requested a quiet corner table.", "طلب الضيف طاولة هادئة في الركن."),
-      at: "2026-08-05 · 11:20",
-    },
-  ]);
+  const [editOpen, setEditOpen] = useState(false);
+
+  if (!reservation) {
+    return (
+      <PanelCard title={t("Reservation not found", "الحجز غير موجود")}>
+        <Link to="/admin/reservations" className="text-sm text-gold underline">
+          {t("Back to reservations", "العودة للحجوزات")}
+        </Link>
+      </PanelCard>
+    );
+  }
+
+  const status = reservation.status;
+  const notes = data.notes.filter((n) => n.code === code);
 
   const addNote = () => {
     if (!draft.trim()) return;
-    setNotes((n) => [
-      {
-        id: Date.now(),
-        author: t("Hafez Rahim", "حافظ رحيم"),
-        text: draft.trim(),
-        at: new Date().toISOString().slice(0, 16).replace("T", " · "),
-      },
-      ...n,
-    ]);
+    create("notes", {
+      id: uid(),
+      code,
+      author: t("Hafez Rahim", "حافظ رحيم"),
+      text: draft.trim(),
+      at: new Date().toISOString().slice(0, 16).replace("T", " · "),
+    });
     setDraft("");
     toast.success(t("Note added", "تمت إضافة الملاحظة"));
+  };
+
+  const setStatus = (s: ResStatus) => update("reservations", reservation.id, { status: s });
+
+  const submitEdit = (v: RecordValues) => {
+    update("reservations", reservation.id, {
+      guest: String(v.guest),
+      guestAr: String(v.guestAr || v.guest),
+      phone: String(v.phone),
+      email: String(v.email),
+      brand: String(v.brand),
+      brandAr: String(v.brandAr || v.brand),
+      branch: String(v.branch),
+      branchAr: String(v.branchAr || v.branch),
+      date: String(v.date),
+      time: String(v.time),
+      party: Number(v.party) || 1,
+    });
+    toast.success(t("Reservation updated", "تم تحديث الحجز"));
   };
 
   const info = [
@@ -82,9 +105,20 @@ function ReservationDetail() {
           <ArrowLeft className="size-4 rtl:rotate-180" />
           {t("Back to reservations", "العودة للحجوزات")}
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="font-button text-sm tracking-[0.1em]" dir="ltr">{reservation.code}</span>
           <StatusPill status={status} />
+          <RowActions>
+            <EditButton onClick={() => setEditOpen(true)} />
+            <DeleteButton
+              name={reservation.code}
+              onConfirm={() => {
+                remove("reservations", reservation.id);
+                toast.success(t("Reservation deleted", "تم حذف الحجز"));
+                navigate({ to: "/admin/reservations" });
+              }}
+            />
+          </RowActions>
         </div>
       </div>
 
@@ -179,11 +213,25 @@ function ReservationDetail() {
             {t("Add note", "إضافة ملاحظة")}
           </button>
           <ul className="divide-y divide-border">
+            {notes.length === 0 && (
+              <li className="py-3 text-sm text-muted-foreground">{t("No notes yet", "لا توجد ملاحظات بعد")}</li>
+            )}
             {notes.map((n) => (
               <li key={n.id} className="py-3">
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-button text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{n.author}</p>
-                  <span className="text-xs text-muted-foreground" dir="ltr">{n.at}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-muted-foreground" dir="ltr">{n.at}</span>
+                    <button
+                      onClick={() => {
+                        remove("notes", n.id);
+                        toast.success(t("Note deleted", "تم حذف الملاحظة"));
+                      }}
+                      className="font-button text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-destructive"
+                    >
+                      {t("Delete", "حذف")}
+                    </button>
+                  </div>
                 </div>
                 <p className="mt-1 text-sm">{n.text}</p>
               </li>
@@ -191,6 +239,15 @@ function ReservationDetail() {
           </ul>
         </div>
       </PanelCard>
+
+      <CrudFormDialog
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        title={t("Edit reservation", "تعديل الحجز")}
+        fields={FIELDS}
+        initial={Object.fromEntries(FIELDS.map((f) => [f.key, (reservation as unknown as Record<string, string | number>)[f.key] ?? ""])) as RecordValues}
+        onSubmit={submitEdit}
+      />
     </div>
   );
 }
