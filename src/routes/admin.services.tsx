@@ -1,49 +1,101 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { services } from "@/data/site";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { usePanelData, type ServiceRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/services")({
   component: AdminServices,
 });
 
+const STATUS_OPTIONS = [
+  { value: "live", label: "Live", labelAr: "منشور" },
+  { value: "draft", label: "Draft", labelAr: "مسودة" },
+];
+
+const FIELDS: CrudField[] = [
+  { key: "name", label: "Name", labelAr: "الاسم", required: true },
+  { key: "nameAr", label: "Name (Arabic)", labelAr: "الاسم (عربي)", required: true },
+  { key: "slug", label: "Slug", labelAr: "المعرّف", required: true },
+  { key: "desc", label: "Description", labelAr: "الوصف", type: "textarea", full: true },
+  { key: "descAr", label: "Description (Arabic)", labelAr: "الوصف (عربي)", type: "textarea", full: true },
+  { key: "status", label: "Status", labelAr: "الحالة", type: "select", options: STATUS_OPTIONS },
+];
+
 function AdminServices() {
   const { t, isAr } = useI18n();
+  const { data, create, update, remove } = usePanelData();
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<ServiceRow | null>(null);
+
+  const openCreate = () => {
+    setEditing(null);
+    setOpen(true);
+  };
+
+  const openEdit = (s: ServiceRow) => {
+    setEditing(s);
+    setOpen(true);
+  };
+
+  const handleSubmit = (values: RecordValues) => {
+    const payload = {
+      name: String(values['name'] ?? ""),
+      nameAr: String(values['nameAr'] ?? ""),
+      slug: String(values['slug'] ?? ""),
+      desc: String(values['desc'] ?? ""),
+      descAr: String(values['descAr'] ?? ""),
+      status: String(values['status'] ?? "live"),
+    };
+    if (editing) {
+      update("services", editing.id, payload);
+      toast.success(t("Service updated", "تم تحديث الخدمة"));
+    } else {
+      create("services", payload);
+      toast.success(t("Service created", "تم إنشاء الخدمة"));
+    }
+  };
 
   return (
-    <PanelCard
-      title={t("Services", "الخدمات")}
-      action={
-        <button
-          onClick={() => toast(t("New service draft created", "تم إنشاء مسودة خدمة"))}
-          className="rounded-2xl bg-gold px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground"
-        >
-          {t("New service", "خدمة جديدة")}
-        </button>
-      }
-    >
+    <PanelCard title={t("Services", "الخدمات")} action={<AddButton onClick={openCreate} label={t("New service", "خدمة جديدة")} />}>
       <div className="divide-y divide-border">
-        {services.map((s) => (
-          <div key={s.slug} className="flex flex-wrap items-center justify-between gap-3 py-4">
+        {data.services.map((s) => (
+          <div key={s.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
             <div className="min-w-0 max-w-xl">
               <p className="font-display text-lg">{isAr ? s.nameAr : s.name}</p>
               <p className="text-xs text-muted-foreground">{isAr ? s.descAr : s.desc}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="rounded-full bg-primary/15 px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-primary">
-                {t("Live", "منشور")}
-              </span>
-              <button
-                onClick={() => toast(t(`Editing ${s.name}`, `تعديل ${s.nameAr}`))}
-                className="rounded-xl border border-border px-3 py-1.5 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em]"
+            <RowActions>
+              <span
+                className={`rounded-full px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] ${
+                  s.status === "live" ? "bg-primary/15 text-primary" : "bg-muted text-muted-foreground"
+                }`}
               >
-                {t("Edit", "تعديل")}
-              </button>
-            </div>
+                {s.status === "live" ? t("Live", "منشور") : t("Draft", "مسودة")}
+              </span>
+              <EditButton onClick={() => openEdit(s)} />
+              <DeleteButton
+                name={isAr ? s.nameAr : s.name}
+                onConfirm={() => {
+                  remove("services", s.id);
+                  toast.success(t("Service deleted", "تم حذف الخدمة"));
+                }}
+              />
+            </RowActions>
           </div>
         ))}
       </div>
+
+      <CrudFormDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={editing ? t("Edit service", "تعديل الخدمة") : t("New service", "خدمة جديدة")}
+        fields={FIELDS}
+        initial={editing as unknown as RecordValues}
+        onSubmit={handleSubmit}
+      />
     </PanelCard>
   );
 }

@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { ADMIN_EVENTS } from "@/data/panel";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { usePanelData, type EventRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/events")({
@@ -20,26 +22,72 @@ const STATUS_AR: Record<string, string> = {
   draft: "مسودة",
 };
 
+const FIELDS: CrudField[] = [
+  { key: "title", label: "Title", labelAr: "العنوان", required: true },
+  { key: "titleAr", label: "Title (Arabic)", labelAr: "العنوان (عربي)", required: true },
+  { key: "venue", label: "Venue", labelAr: "المكان", required: true },
+  { key: "venueAr", label: "Venue (Arabic)", labelAr: "المكان (عربي)", required: true },
+  { key: "date", label: "Date", labelAr: "التاريخ", type: "date", required: true },
+  { key: "seats", label: "Seats", labelAr: "المقاعد", type: "number" },
+  { key: "booked", label: "Booked", labelAr: "المحجوز", type: "number" },
+  {
+    key: "status",
+    label: "Status",
+    labelAr: "الحالة",
+    type: "select",
+    options: [
+      { value: "published", label: "Published", labelAr: "منشور" },
+      { value: "draft", label: "Draft", labelAr: "مسودة" },
+      { value: "sold out", label: "Sold out", labelAr: "نفدت التذاكر" },
+    ],
+  },
+];
+
 function AdminEvents() {
   const { t, isAr } = useI18n();
+  const { data, create, update, remove } = usePanelData();
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<EventRow | null>(null);
+
+  const openCreate = () => {
+    setEditing(null);
+    setOpen(true);
+  };
+  const openEdit = (row: EventRow) => {
+    setEditing(row);
+    setOpen(true);
+  };
+
+  const handleSubmit = (values: RecordValues) => {
+    const payload = {
+      title: String(values["title"]),
+      titleAr: String(values["titleAr"]),
+      venue: String(values["venue"]),
+      venueAr: String(values["venueAr"]),
+      date: String(values["date"]),
+      seats: Number(values["seats"]),
+      booked: Number(values["booked"]),
+      status: String(values["status"]),
+    };
+    if (editing) {
+      update("events", editing.id, payload);
+      toast(t("Event updated", "تم تحديث الفعالية"));
+    } else {
+      create("events", payload);
+      toast(t("Event created", "تم إنشاء الفعالية"));
+    }
+  };
 
   return (
     <PanelCard
       title={t("Events", "الفعاليات")}
-      action={
-        <button
-          onClick={() => toast(t("Event draft created", "تم إنشاء مسودة فعالية"))}
-          className="rounded-2xl bg-gold px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground"
-        >
-          {t("New event", "فعالية جديدة")}
-        </button>
-      }
+      action={<AddButton onClick={openCreate} label={t("New event", "فعالية جديدة")} />}
     >
       <div className="grid gap-4 md:grid-cols-2">
-        {ADMIN_EVENTS.map((e) => {
-          const pct = Math.round((e.booked / e.seats) * 100);
+        {data.events.map((e) => {
+          const pct = e.seats > 0 ? Math.round((e.booked / e.seats) * 100) : 0;
           return (
-            <div key={e.title} className="rounded-2xl border border-border p-5">
+            <div key={e.id} className="rounded-2xl border border-border p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-display text-lg">{isAr ? e.titleAr : e.title}</p>
@@ -59,24 +107,34 @@ function AdminEvents() {
                 {e.booked}/{e.seats} {t("seats booked", "مقعد محجوز")} · {pct}%
               </p>
 
-              <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => toast(t("Opening editor", "جارٍ فتح المحرر"))}
-                  className="rounded-xl border border-border px-4 py-2 font-button text-[0.65rem] font-semibold uppercase tracking-[0.1em]"
-                >
-                  {t("Edit", "تعديل")}
-                </button>
-                <button
-                  onClick={() => toast(t("Guest list exported", "تم تصدير قائمة الضيوف"))}
-                  className="rounded-xl border border-border px-4 py-2 font-button text-[0.65rem] font-semibold uppercase tracking-[0.1em]"
-                >
-                  {t("Guest list", "قائمة الضيوف")}
-                </button>
+              <div className="mt-4">
+                <RowActions>
+                  <EditButton onClick={() => openEdit(e)} />
+                  <DeleteButton
+                    name={isAr ? e.titleAr : e.title}
+                    onConfirm={() => {
+                      remove("events", e.id);
+                      toast(t("Event deleted", "تم حذف الفعالية"));
+                    }}
+                  />
+                </RowActions>
               </div>
             </div>
           );
         })}
+        {data.events.length === 0 && (
+          <p className="col-span-full py-8 text-center text-sm text-muted-foreground">{t("No events found", "لا توجد فعاليات")}</p>
+        )}
       </div>
+
+      <CrudFormDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={editing ? t("Edit event", "تعديل الفعالية") : t("New event", "فعالية جديدة")}
+        fields={FIELDS}
+        {...(editing ? { initial: editing } : {})}
+        onSubmit={handleSubmit}
+      />
     </PanelCard>
   );
 }

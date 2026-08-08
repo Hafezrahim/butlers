@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarCheck, Gift, Star, Wallet } from "lucide-react";
 import { PanelCard, StatCard, StatusPill } from "@/components/panel/PanelShell";
-import { MY_RESERVATIONS } from "@/data/panel";
+import { usePanelData } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/account/")({
@@ -10,7 +10,8 @@ export const Route = createFileRoute("/account/")({
 
 function AccountOverview() {
   const { t, isAr } = useI18n();
-  const upcoming = MY_RESERVATIONS.filter((r) => r.status !== "cancelled").slice(0, 2);
+  const { data } = usePanelData();
+  const upcoming = data.reservations.filter((r) => r.guest === "Hafez Rahim" && r.status !== "cancelled").slice(0, 2);
 
   return (
     <>

@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { PanelCard, StatCard, StatusPill } from "@/components/panel/PanelShell";
-import { ADMIN_GUESTS, ADMIN_RESERVATIONS } from "@/data/panel";
+import { usePanelData } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/")({
@@ -84,13 +84,13 @@ function AdminDashboard() {
   const { t, isAr } = useI18n();
   const [range, setRange] = useState<(typeof RANGES)[number]["key"]>("today");
   const [tasks, setTasks] = useState(INITIAL_TASKS);
-  const [handled, setHandled] = useState<Record<string, "confirmed" | "cancelled">>({});
   const active = RANGES.find((r) => r.key === range)!;
-  const latest = ADMIN_RESERVATIONS.slice(-5).reverse();
+  const { data, update } = usePanelData();
+  const latest = data.reservations.slice(0, 5);
   const topGuests = useMemo(() => {
     const num = (s: string) => Number(s.replace(/[^\d]/g, ""));
-    return [...ADMIN_GUESTS].sort((a, b) => num(b.spend) - num(a.spend)).slice(0, 4);
-  }, []);
+    return [...data.guests].sort((a, b) => num(b.spend) - num(a.spend)).slice(0, 4);
+  }, [data.guests]);
   const doneCount = tasks.filter((x) => x.done).length;
 
   return (
@@ -288,7 +288,7 @@ function AdminDashboard() {
         >
           <div className="divide-y divide-border">
             {topGuests.map((g) => (
-              <div key={g.name} className="flex items-center justify-between gap-3 py-3">
+              <div key={g.id} className="flex items-center justify-between gap-3 py-3">
                 <div className="flex items-center gap-3">
                   <span className="grid size-9 place-items-center rounded-xl bg-primary/10 font-button text-[0.7rem] font-semibold text-primary">
                     {(isAr ? g.nameAr : g.name).slice(0, 2)}
@@ -319,7 +319,7 @@ function AdminDashboard() {
       >
         <div className="divide-y divide-border">
           {latest.map((r) => (
-            <div key={r.code} className="flex flex-wrap items-center justify-between gap-3 py-3">
+            <div key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
               <div>
                 <p className="text-sm font-medium">{isAr ? r.guestAr : r.guest}</p>
                 <p className="text-xs text-muted-foreground">
@@ -327,14 +327,14 @@ function AdminDashboard() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <StatusPill status={handled[r.code] ?? r.status} />
-                {(handled[r.code] ?? r.status) === "pending" && (
+                <StatusPill status={r.status} />
+                {r.status === "pending" && (
                   <>
                     <button
                       type="button"
                       aria-label={t("Approve", "اعتماد")}
                       onClick={() => {
-                        setHandled((p) => ({ ...p, [r.code]: "confirmed" }));
+                        update("reservations", r.id, { status: "confirmed" });
                         toast.success(t("Reservation confirmed", "تم تأكيد الحجز"));
                       }}
                       className="rounded-xl border border-border p-2 text-tone-emerald transition-colors hover:border-tone-emerald"
@@ -345,7 +345,7 @@ function AdminDashboard() {
                       type="button"
                       aria-label={t("Decline", "رفض")}
                       onClick={() => {
-                        setHandled((p) => ({ ...p, [r.code]: "cancelled" }));
+                        update("reservations", r.id, { status: "cancelled" });
                         toast(t("Reservation cancelled", "تم إلغاء الحجز"));
                       }}
                       className="rounded-xl border border-border p-2 text-destructive transition-colors hover:border-destructive"
