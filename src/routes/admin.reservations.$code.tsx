@@ -74,17 +74,17 @@ function ReservationDetail() {
 
   const submitEdit = (v: RecordValues) => {
     update("reservations", reservation.id, {
-      guest: String(v.guest),
-      guestAr: String(v.guestAr || v.guest),
-      phone: String(v.phone),
-      email: String(v.email),
-      brand: String(v.brand),
-      brandAr: String(v.brandAr || v.brand),
-      branch: String(v.branch),
-      branchAr: String(v.branchAr || v.branch),
-      date: String(v.date),
-      time: String(v.time),
-      party: Number(v.party) || 1,
+      guest: String(v["guest"]),
+      guestAr: String(v["guestAr"] || v["guest"]),
+      phone: String(v["phone"]),
+      email: String(v["email"]),
+      brand: String(v["brand"]),
+      brandAr: String(v["brandAr"] || v["brand"]),
+      branch: String(v["branch"]),
+      branchAr: String(v["branchAr"] || v["branch"]),
+      date: String(v["date"]),
+      time: String(v["time"]),
+      party: Number(v["party"]) || 1,
     });
     toast.success(t("Reservation updated", "تم تحديث الحجز"));
   };

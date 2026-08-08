@@ -67,19 +67,19 @@ function AdminReservations() {
 
   const submit = (v: RecordValues) => {
     const payload = {
-      code: String(v.code),
-      guest: String(v.guest),
-      guestAr: String(v.guestAr || v.guest),
-      phone: String(v.phone),
-      email: String(v.email),
-      brand: String(v.brand),
-      brandAr: String(v.brandAr || v.brand),
-      branch: String(v.branch),
-      branchAr: String(v.branchAr || v.branch),
-      date: String(v.date),
-      time: String(v.time),
-      party: Number(v.party) || 1,
-      status: String(v.status) as ResStatus,
+      code: String(v["code"]),
+      guest: String(v["guest"]),
+      guestAr: String(v["guestAr"] || v["guest"]),
+      phone: String(v["phone"]),
+      email: String(v["email"]),
+      brand: String(v["brand"]),
+      brandAr: String(v["brandAr"] || v["brand"]),
+      branch: String(v["branch"]),
+      branchAr: String(v["branchAr"] || v["branch"]),
+      date: String(v["date"]),
+      time: String(v["time"]),
+      party: Number(v["party"]) || 1,
+      status: String(v["status"]) as ResStatus,
     };
     if (editing) {
       update("reservations", editing.id, payload);

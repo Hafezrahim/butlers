@@ -31,7 +31,7 @@ function MyReservations() {
 
   const submitReschedule = (v: RecordValues) => {
     if (!editing) return;
-    update("reservations", editing.id, { date: String(v.date), time: String(v.time), party: Number(v.party) || editing.party, status: "pending" });
+    update("reservations", editing.id, { date: String(v["date"]), time: String(v["time"]), party: Number(v["party"]) || editing.party, status: "pending" });
     toast.success(t("Reservation rescheduled", "تم تغيير موعد الحجز"));
   };
 

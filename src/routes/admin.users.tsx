@@ -37,12 +37,12 @@ function AdminUsers() {
 
   const submit = (v: RecordValues) => {
     const payload = {
-      name: String(v.name),
-      nameAr: String(v.nameAr || v.name),
-      email: String(v.email),
-      role: String(v.role),
-      roleAr: String(v.roleAr || v.role),
-      status: String(v.status),
+      name: String(v["name"]),
+      nameAr: String(v["nameAr"] || v["name"]),
+      email: String(v["email"]),
+      role: String(v["role"]),
+      roleAr: String(v["roleAr"] || v["role"]),
+      status: String(v["status"]),
     };
     if (editing) {
       update("users", editing.id, payload);
