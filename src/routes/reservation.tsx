@@ -220,7 +220,7 @@ function Reservation() {
             </div>
 
             <p className="text-center text-xs text-muted-foreground">
-              {t("Bookings are not stored yet — enable Lovable Cloud to save reservations to a database.", "لا يتم حفظ الحجوزات حاليًا — فعّل Lovable Cloud لحفظ الحجوزات في قاعدة بيانات.")}
+              {t("Bookings are not stored yet.", "لا يتم حفظ الحجوزات حاليًا.")}
             </p>
           </div>
         ) : (

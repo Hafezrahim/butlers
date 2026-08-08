@@ -87,8 +87,8 @@ function Careers() {
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
               {t(
-                "CV uploads require a backend — enable Lovable Cloud to store applications and files.",
-                "يتطلب رفع السيرة الذاتية خادمًا خلفيًا — فعّل Lovable Cloud لتخزين الطلبات والملفات."
+                "CV uploads require a backend.",
+                "يتطلب رفع السيرة الذاتية خادمًا خلفيًا."
               )}
             </p>
           </div>
