@@ -25,13 +25,13 @@ export const Route = createFileRoute("/admin/")({
 });
 
 const OCCUPANCY = [
-  { day: "Mon", dayAr: "الإثنين", pct: 46 },
-  { day: "Tue", dayAr: "الثلاثاء", pct: 58 },
-  { day: "Wed", dayAr: "الأربعاء", pct: 64 },
-  { day: "Thu", dayAr: "الخميس", pct: 82 },
-  { day: "Fri", dayAr: "الجمعة", pct: 96 },
-  { day: "Sat", dayAr: "السبت", pct: 91 },
-  { day: "Sun", dayAr: "الأحد", pct: 70 },
+  { day: "Mon", dayAr: "الإثنين", pct: 46, color: "bg-green-500/80 group-hover:bg-green-500" },
+  { day: "Tue", dayAr: "الثلاثاء", pct: 58, color: "bg-blue-800/80 group-hover:bg-blue-800" },
+  { day: "Wed", dayAr: "الأربعاء", pct: 64, color: "bg-purple-500/80 group-hover:bg-purple-500" },
+  { day: "Thu", dayAr: "الخميس", pct: 82, color: "bg-pink-500/80 group-hover:bg-pink-500" },
+  { day: "Fri", dayAr: "الجمعة", pct: 96, color: "bg-green-500/80 group-hover:bg-green-500" },
+  { day: "Sat", dayAr: "السبت", pct: 91, color: "bg-blue-800/80 group-hover:bg-blue-800" },
+  { day: "Sun", dayAr: "الأحد", pct: 70, color: "bg-purple-500/80 group-hover:bg-purple-500" },
 ];
 
 const CHANNELS = [
@@ -201,7 +201,7 @@ function AdminDashboard() {
                 {d.pct}%
               </span>
               <div className="relative h-40 w-full">
-                <div className="absolute bottom-0 w-full rounded-t-xl bg-primary/80 transition-colors group-hover:bg-gold" style={{ height: `${d.pct}%` }} />
+                <div className={`absolute bottom-0 w-full rounded-t-xl transition-colors ${d.color}`} style={{ height: `${d.pct}%` }} />
               </div>
               <span className="font-button text-[0.62rem] uppercase tracking-[0.1em] text-muted-foreground">
                 {isAr ? d.dayAr : d.day}

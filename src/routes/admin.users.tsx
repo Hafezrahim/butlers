@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Check, Minus } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { ROLE_MATRIX } from "@/data/panel";
 import { usePanelData, type UserRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
@@ -57,7 +58,12 @@ function AdminUsers() {
     <>
       <PanelCard
         title={t("Team members", "أعضاء الفريق")}
-        action={<AddButton onClick={() => { setEditing(null); setOpen(true); }} label={t("Invite user", "دعوة مستخدم")} />}
+        action={
+          <div className="flex gap-2">
+            <ExportButton onClick={() => exportToCsv(data.users, "Users")} />
+            <AddButton onClick={() => { setEditing(null); setOpen(true); }} label={t("Invite user", "دعوة مستخدم")} />
+          </div>
+        }
       >
         <div className="divide-y divide-border">
           {data.users.map((u) => (
@@ -76,7 +82,7 @@ function AdminUsers() {
                     toast.success(t("Status updated", "تم تحديث الحالة"));
                   }}
                   className={`rounded-full px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] ${
-                    u.status === "active" ? "bg-primary/15 text-primary" : "bg-gold/20 text-gold"
+                    u.status === "active" ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400" : "bg-gold/20 text-gold"
                   }`}
                 >
                   {u.status === "active" ? t("Active", "نشط") : t("Invited", "مدعو")}

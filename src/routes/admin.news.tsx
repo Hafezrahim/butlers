@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type PostRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -63,8 +64,13 @@ function AdminNews() {
 
   return (
     <PanelCard
-      title={t("News & stories", "الأخبار والمقالات")}
-      action={<AddButton onClick={openCreate} label={t("New post", "مقال جديد")} />}
+      title={t("News & Updates", "الأخبار والتحديثات")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.posts, "News")} />
+          <AddButton onClick={openCreate} label={t("New post", "خبر جديد")} />
+        </div>
+      }
     >
       <div className="divide-y divide-border">
         {data.posts.map((p) => (
@@ -78,7 +84,7 @@ function AdminNews() {
             <div className="flex items-center gap-2">
               <span
                 className={`rounded-full px-3 py-1 font-button text-[0.62rem] font-semibold uppercase tracking-[0.1em] ${
-                  p.status === "published" ? "bg-primary/15 text-primary" : "bg-muted text-muted-foreground"
+                  p.status === "published" ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400" : "bg-muted text-muted-foreground"
                 }`}
               >
                 {p.status === "published" ? t("Published", "منشور") : t("Draft", "مسودة")}

@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type BrandRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -64,7 +65,15 @@ function AdminBrands() {
   };
 
   return (
-    <PanelCard title={t("Brands", "العلامات")} action={<AddButton onClick={openCreate} label={t("New brand", "علامة جديدة")} />}>
+    <PanelCard
+      title={t("Brands", "العلامات التجارية")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.brands, "Brands")} />
+          <AddButton onClick={openCreate} label={t("New brand", "علامة جديدة")} />
+        </div>
+      }
+    >
       <div className="grid gap-4 md:grid-cols-2">
         {data.brands.map((b) => (
           <div key={b.id} className="overflow-hidden rounded-2xl border border-border">

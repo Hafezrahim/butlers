@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type EventRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/admin/events")({
 });
 
 const STATUS_STYLE: Record<string, string> = {
-  published: "bg-primary/15 text-primary",
+  published: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
   "sold out": "bg-gold/20 text-gold",
   draft: "bg-muted text-muted-foreground",
 };
@@ -80,8 +81,13 @@ function AdminEvents() {
 
   return (
     <PanelCard
-      title={t("Events", "الفعاليات")}
-      action={<AddButton onClick={openCreate} label={t("New event", "فعالية جديدة")} />}
+      title={t("Events & Calendar", "الفعاليات")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.events, "Events")} />
+          <AddButton onClick={openCreate} label={t("New event", "فعالية جديدة")} />
+        </div>
+      }
     >
       <div className="grid gap-4 md:grid-cols-2">
         {data.events.map((e) => {

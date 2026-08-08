@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type GalleryRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -53,7 +54,15 @@ function AdminGallery() {
   };
 
   return (
-    <PanelCard title={t("Gallery", "معرض الصور")} action={<AddButton onClick={openCreate} label={t("Add media", "إضافة صورة")} />}>
+    <PanelCard
+      title={t("Gallery", "معرض الصور")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.gallery, "Gallery")} />
+          <AddButton onClick={openCreate} label={t("Upload image", "رفع صورة")} />
+        </div>
+      }
+    >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {data.gallery.map((g) => (
           <figure key={g.id} className="overflow-hidden rounded-2xl border border-border">

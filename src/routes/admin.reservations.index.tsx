@@ -3,7 +3,8 @@ import { useMemo, useState } from "react";
 import { ChevronRight, Search } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard, StatusPill } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { STATUS_LABEL, type ResStatus } from "@/data/panel";
 import { usePanelData, type ReservationRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
@@ -91,7 +92,15 @@ function AdminReservations() {
   };
 
   return (
-    <PanelCard title={t("Reservations", "الحجوزات")} action={<AddButton onClick={openNew} label={t("New reservation", "حجز جديد")} />}>
+    <PanelCard
+      title={t("Reservations", "الحجوزات")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.reservations, "Reservations")} />
+          <AddButton onClick={openNew} label={t("New reservation", "حجز جديد")} />
+        </div>
+      }
+    >
       <div className="mb-5 flex flex-wrap items-center gap-3">
         <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border px-4 py-2">
           <Search className="size-4 text-muted-foreground" />

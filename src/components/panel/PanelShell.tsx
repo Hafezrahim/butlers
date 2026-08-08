@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Bell, CalendarCheck, CircleAlert, LifeBuoy, LogOut, Search, Settings, TrendingDown, TrendingUp, UserRound } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { STATUS_LABEL, type ResStatus } from "@/data/panel";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/store/auth-store";
 
 export type PanelNavItem = {
   to: string;
@@ -27,7 +28,14 @@ export function PanelShell({
   children: ReactNode;
 }) {
   const { isAr } = useI18n();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState<null | "bell" | "user">(null);
+
+  const handleLogout = () => {
+    logout();
+    navigate({ to: "/" });
+  };
   const notifications = [
     { icon: CalendarCheck, en: "9 reservations awaiting approval", ar: "٩ حجوزات بانتظار الموافقة", time: isAr ? "منذ ٥ د" : "5m ago", tone: "text-gold" },
     { icon: LifeBuoy, en: "2 high-priority support tickets", ar: "تذكرتا دعم بأولوية عالية", time: isAr ? "منذ ٢٢ د" : "22m ago", tone: "text-tone-rose" },
@@ -77,14 +85,14 @@ export function PanelShell({
               </span>
             </button>
             {openMenu === "bell" && (
-              <div className="absolute end-0 top-full z-30 mt-2 w-80 rounded-2xl border border-border bg-card p-2 shadow-xl">
+              <div className="absolute end-0 top-full z-30 mt-2 w-80 rounded-2xl border border-border bg-card p-2 shadow-xl text-emerald-950 dark:text-emerald-50">
                 <p className="eyebrow px-3 py-2 text-[0.58rem]">{isAr ? "الإشعارات" : "Notifications"}</p>
                 {notifications.map((n) => (
-                  <div key={n.en} className="flex gap-3 rounded-xl px-3 py-2.5 hover:bg-muted">
+                  <div key={n.en} className="flex gap-3 rounded-xl px-3 py-2.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">
                     <n.icon className={cn("mt-0.5 size-4 shrink-0", n.tone)} />
                     <div className="min-w-0">
-                      <p className="text-sm leading-snug">{isAr ? n.ar : n.en}</p>
-                      <p className="text-[0.68rem] text-muted-foreground">{n.time}</p>
+                      <p className="text-sm leading-snug font-medium">{isAr ? n.ar : n.en}</p>
+                      <p className="text-[0.68rem] text-emerald-700 dark:text-emerald-400">{n.time}</p>
                     </div>
                   </div>
                 ))}
@@ -107,7 +115,7 @@ export function PanelShell({
               </div>
             </button>
             {openMenu === "user" && (
-              <div className="absolute end-0 top-full z-30 mt-2 w-56 rounded-2xl border border-border bg-card p-2 shadow-xl">
+              <div className="absolute end-0 top-full z-30 mt-2 w-56 rounded-2xl border border-border bg-card p-2 shadow-xl text-foreground">
                 <Link to="/account/profile" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm hover:bg-muted">
                   <UserRound className="size-4 text-muted-foreground" />
                   {isAr ? "الملف الشخصي" : "My profile"}
@@ -116,21 +124,21 @@ export function PanelShell({
                   <Settings className="size-4 text-muted-foreground" />
                   {isAr ? "الإعدادات" : "Settings"}
                 </Link>
-                <Link to="/" className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10">
+                <button onClick={handleLogout} className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10">
                   <LogOut className="size-4" />
                   {isAr ? "تسجيل الخروج" : "Log out"}
-                </Link>
+                </button>
               </div>
             )}
             </div>
 
-            <Link
-              to="/"
+            <button
+              onClick={handleLogout}
               aria-label={isAr ? "تسجيل الخروج" : "Log out"}
               className="rounded-2xl border border-white/15 bg-white/5 p-2.5 text-warm transition-colors hover:border-destructive hover:text-destructive"
             >
               <LogOut className="size-4" />
-            </Link>
+            </button>
           </div>
         </div>
       </div>

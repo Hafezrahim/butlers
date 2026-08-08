@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Download, Pencil, Plus, Trash2 } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -205,6 +205,19 @@ export function AddButton({ onClick, label }: { onClick: () => void; label?: str
     >
       <Plus className="size-4" />
       {label ?? t("Add new", "إضافة جديد")}
+    </button>
+  );
+}
+
+export function ExportButton({ onClick }: { onClick: () => void }) {
+  const { t } = useI18n();
+  return (
+    <button
+      onClick={onClick}
+      className="inline-flex items-center gap-2 rounded-2xl border border-border bg-background px-4 py-2 font-button text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-gold"
+    >
+      <Download className="size-4" />
+      {t("Export CSV", "تصدير CSV")}
     </button>
   );
 }

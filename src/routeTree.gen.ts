@@ -18,7 +18,9 @@ import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
@@ -84,9 +86,19 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReservationRoute = ReservationRouteImport.update({
@@ -195,7 +207,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
   '/news': typeof NewsRoute
+  '/register': typeof RegisterRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
@@ -224,7 +238,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
   '/news': typeof NewsRoute
+  '/register': typeof RegisterRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
@@ -256,7 +272,9 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
   '/news': typeof NewsRoute
+  '/register': typeof RegisterRoute
   '/reservation': typeof ReservationRoute
   '/services': typeof ServicesRoute
   '/account/loyalty': typeof AccountLoyaltyRoute
@@ -289,7 +307,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/login'
     | '/news'
+    | '/register'
     | '/reservation'
     | '/services'
     | '/account/loyalty'
@@ -318,7 +338,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/login'
     | '/news'
+    | '/register'
     | '/reservation'
     | '/services'
     | '/account/loyalty'
@@ -349,7 +371,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/login'
     | '/news'
+    | '/register'
     | '/reservation'
     | '/services'
     | '/account/loyalty'
@@ -381,7 +405,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
+  LoginRoute: typeof LoginRoute
   NewsRoute: typeof NewsRoute
+  RegisterRoute: typeof RegisterRoute
   ReservationRoute: typeof ReservationRoute
   ServicesRoute: typeof ServicesRoute
 }
@@ -451,11 +477,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news': {
       id: '/news'
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reservation': {
@@ -655,7 +695,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
+  LoginRoute: LoginRoute,
   NewsRoute: NewsRoute,
+  RegisterRoute: RegisterRoute,
   ReservationRoute: ReservationRoute,
   ServicesRoute: ServicesRoute,
 }

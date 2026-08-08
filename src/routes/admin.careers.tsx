@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type ApplicationRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/admin/careers")({
 const STATUS_STYLE: Record<string, string> = {
   review: "bg-muted text-foreground",
   interview: "bg-gold/20 text-gold",
-  hired: "bg-primary/15 text-primary",
+  hired: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
   rejected: "bg-destructive/15 text-destructive",
 };
 
@@ -83,8 +84,13 @@ function AdminCareers() {
 
   return (
     <PanelCard
-      title={t("Careers & applications", "الوظائف والطلبات")}
-      action={<AddButton onClick={openCreate} label={t("New opening", "وظيفة جديدة")} />}
+      title={t("Applications", "طلبات التوظيف")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.applications, "Applications")} />
+          <AddButton onClick={openCreate} label={t("New application", "طلب توظيف جديد")} />
+        </div>
+      }
     >
       <div className="divide-y divide-border">
         {data.applications.map((a) => (

@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type TicketRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -25,7 +26,7 @@ const LABEL: Record<string, { en: string; ar: string }> = {
 const STATUS_STYLE: Record<string, string> = {
   open: "bg-destructive/15 text-destructive",
   pending: "bg-gold/20 text-gold",
-  resolved: "bg-primary/15 text-primary",
+  resolved: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
 };
 
 const FIELDS: CrudField[] = [
@@ -101,7 +102,15 @@ function AdminSupport() {
   };
 
   return (
-    <PanelCard title={t("Support tickets", "تذاكر الدعم")} action={<AddButton onClick={openCreate} label={t("New ticket", "تذكرة جديدة")} />}>
+    <PanelCard
+      title={t("Support tickets", "تذاكر الدعم")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.tickets, "Support_Tickets")} />
+          <AddButton onClick={openCreate} label={t("New ticket", "تذكرة جديدة")} />
+        </div>
+      }
+    >
       <div className="mb-5 flex flex-wrap gap-2">
         {FILTERS.map((f) => (
           <button

@@ -1,9 +1,11 @@
 import { Instagram, Facebook, Mail, Phone, LogIn, ShieldCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useI18n } from "@/i18n";
+import { useAuth } from "@/store/auth-store";
 
 export function TopBar() {
   const { lang, setLang, t } = useI18n();
+  const { isAuthenticated, login } = useAuth();
 
   return (
     <div className="ink-panel hidden border-b border-white/10 md:block">
@@ -45,12 +47,25 @@ export function TopBar() {
           </div>
 
           <div className="flex items-center gap-3 font-button text-[0.65rem] font-semibold uppercase tracking-[0.1em]">
-            <Link to="/account" className="flex items-center gap-1.5 transition-colors hover:text-gold">
-              <LogIn className="size-3.5" /> {t("My Account", "حسابي")}
-            </Link>
-            <Link to="/admin" className="flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
-              <ShieldCheck className="size-3.5" /> {t("Admin", "الإدارة")}
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/account" className="flex items-center gap-1.5 transition-colors hover:text-gold">
+                  <LogIn className="size-3.5" /> {t("My Account", "حسابي")}
+                </Link>
+                <Link to="/admin" className="flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
+                  <ShieldCheck className="size-3.5" /> {t("Admin", "الإدارة")}
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="flex items-center gap-1.5 transition-colors hover:text-gold">
+                  <LogIn className="size-3.5" /> {t("Sign In", "تسجيل الدخول")}
+                </Link>
+                <Link to="/register" className="flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
+                  <ShieldCheck className="size-3.5" /> {t("Sign Up", "إنشاء حساب")}
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

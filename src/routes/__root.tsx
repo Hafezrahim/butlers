@@ -15,6 +15,9 @@ import { MobileNav } from "@/components/site/MobileNav";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/i18n";
 import { PanelDataProvider } from "@/store/panel-store";
+import { AuthProvider } from "@/store/auth-store";
+import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
+import { StickyWidgets } from "@/components/StickyWidgets";
 
 function NotFoundComponent() {
   return (
@@ -86,24 +89,28 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <I18nProvider>
-        <PanelDataProvider>
-        <div className="flex min-h-screen flex-col bg-background">
-          {!isPanel && <SiteHeader />}
-          <main className={`flex-1 ${isPanel ? "" : "pb-20 lg:pb-0"}`}>
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
-          </main>
-          {!isPanel && (
-            <div className="hidden lg:block">
-              <SiteFooter />
-            </div>
-          )}
-        </div>
-        {!isPanel && <MobileNav />}
-        <Toaster />
-        </PanelDataProvider>
-      </I18nProvider>
+      <AuthProvider>
+        <I18nProvider>
+          <PanelDataProvider>
+          <div className="flex min-h-screen flex-col bg-background">
+            {!isPanel && <SiteHeader />}
+            <main className={`flex-1 ${isPanel ? "" : "pb-20 lg:pb-0"}`}>
+              {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+              <Outlet />
+            </main>
+            {!isPanel && (
+              <div className="hidden lg:block">
+                <SiteFooter />
+              </div>
+            )}
+          </div>
+          {!isPanel && <MobileNav />}
+          <Toaster />
+          <PwaInstallPrompt />
+          <StickyWidgets />
+          </PanelDataProvider>
+        </I18nProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

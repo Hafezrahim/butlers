@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { PanelCard } from "@/components/panel/PanelShell";
-import { AddButton, CrudFormDialog, DeleteButton, EditButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { AddButton, CrudFormDialog, DeleteButton, EditButton, ExportButton, RowActions, type CrudField, type RecordValues } from "@/components/panel/CrudDialog";
+import { exportToCsv } from "@/lib/utils";
 import { usePanelData, type GuestRow } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
@@ -73,7 +74,15 @@ function AdminGuests() {
   };
 
   return (
-    <PanelCard title={t("Guest directory", "دليل الضيوف")} action={<AddButton onClick={openCreate} label={t("Add guest", "إضافة ضيف")} />}>
+    <PanelCard
+      title={t("Guest directory", "دليل الضيوف")}
+      action={
+        <div className="flex gap-2">
+          <ExportButton onClick={() => exportToCsv(data.guests, "Guests")} />
+          <AddButton onClick={openCreate} label={t("Add guest", "إضافة ضيف")} />
+        </div>
+      }
+    >
       <div className="mb-5 flex items-center gap-2 rounded-2xl border border-border px-4 py-2">
         <Search className="size-4 text-muted-foreground" />
         <input
