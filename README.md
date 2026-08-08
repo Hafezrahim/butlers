@@ -745,15 +745,7 @@ ERP Integration
 
 Business Intelligence Dashboard
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/84ff41b2-56fa-4eab-a255-20a0b1042fbe).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+This project was built by : Mr.Hafez Rahim  +201007419344
 
 ## Development
 
