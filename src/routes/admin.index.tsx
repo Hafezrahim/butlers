@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { PanelCard, StatCard, StatusPill } from "@/components/panel/PanelShell";
-import { ADMIN_GUESTS, ADMIN_RESERVATIONS } from "@/data/panel";
+import { usePanelData } from "@/store/panel-store";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/admin/")({
@@ -86,10 +86,11 @@ function AdminDashboard() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [handled, setHandled] = useState<Record<string, "confirmed" | "cancelled">>({});
   const active = RANGES.find((r) => r.key === range)!;
-  const latest = ADMIN_RESERVATIONS.slice(-5).reverse();
+  const { data, update } = usePanelData();
+  const latest = data.reservations.slice(0, 5);
   const topGuests = useMemo(() => {
     const num = (s: string) => Number(s.replace(/[^\d]/g, ""));
-    return [...ADMIN_GUESTS].sort((a, b) => num(b.spend) - num(a.spend)).slice(0, 4);
+    return [...data.guests].sort((a, b) => num(b.spend) - num(a.spend)).slice(0, 4);
   }, []);
   const doneCount = tasks.filter((x) => x.done).length;
 
