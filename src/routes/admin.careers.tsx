@@ -63,14 +63,14 @@ function AdminCareers() {
 
   const handleSubmit = (values: RecordValues) => {
     const payload = {
-      name: String(values.name),
-      nameAr: String(values.nameAr),
-      role: String(values.role),
-      roleAr: String(values.roleAr),
-      venue: String(values.venue),
-      venueAr: String(values.venueAr),
-      date: String(values.date),
-      status: String(values.status),
+      name: String(values["name"]),
+      nameAr: String(values["nameAr"]),
+      role: String(values["role"]),
+      roleAr: String(values["roleAr"]),
+      venue: String(values["venue"]),
+      venueAr: String(values["venueAr"]),
+      date: String(values["date"]),
+      status: String(values["status"]),
     };
     if (editing) {
       update("applications", editing.id, payload);
@@ -122,7 +122,7 @@ function AdminCareers() {
         onOpenChange={setOpen}
         title={editing ? t("Edit application", "تعديل الطلب") : t("New opening", "وظيفة جديدة")}
         fields={FIELDS}
-        initial={editing ?? undefined}
+        {...(editing ? { initial: editing } : {})}
         onSubmit={handleSubmit}
       />
     </PanelCard>

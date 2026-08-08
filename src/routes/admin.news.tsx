@@ -45,12 +45,12 @@ function AdminNews() {
 
   const handleSubmit = (values: RecordValues) => {
     const payload = {
-      title: String(values.title),
-      titleAr: String(values.titleAr),
-      category: String(values.category),
-      categoryAr: String(values.categoryAr),
-      date: String(values.date),
-      status: String(values.status),
+      title: String(values["title"]),
+      titleAr: String(values["titleAr"]),
+      category: String(values["category"]),
+      categoryAr: String(values["categoryAr"]),
+      date: String(values["date"]),
+      status: String(values["status"]),
     };
     if (editing) {
       update("posts", editing.id, payload);
@@ -106,7 +106,7 @@ function AdminNews() {
         onOpenChange={setOpen}
         title={editing ? t("Edit post", "تعديل المقال") : t("New post", "مقال جديد")}
         fields={FIELDS}
-        initial={editing ?? undefined}
+        {...(editing ? { initial: editing } : {})}
         onSubmit={handleSubmit}
       />
     </PanelCard>

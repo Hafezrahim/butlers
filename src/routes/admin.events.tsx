@@ -60,14 +60,14 @@ function AdminEvents() {
 
   const handleSubmit = (values: RecordValues) => {
     const payload = {
-      title: String(values.title),
-      titleAr: String(values.titleAr),
-      venue: String(values.venue),
-      venueAr: String(values.venueAr),
-      date: String(values.date),
-      seats: Number(values.seats),
-      booked: Number(values.booked),
-      status: String(values.status),
+      title: String(values["title"]),
+      titleAr: String(values["titleAr"]),
+      venue: String(values["venue"]),
+      venueAr: String(values["venueAr"]),
+      date: String(values["date"]),
+      seats: Number(values["seats"]),
+      booked: Number(values["booked"]),
+      status: String(values["status"]),
     };
     if (editing) {
       update("events", editing.id, payload);
@@ -132,7 +132,7 @@ function AdminEvents() {
         onOpenChange={setOpen}
         title={editing ? t("Edit event", "تعديل الفعالية") : t("New event", "فعالية جديدة")}
         fields={FIELDS}
-        initial={editing ?? undefined}
+        {...(editing ? { initial: editing } : {})}
         onSubmit={handleSubmit}
       />
     </PanelCard>

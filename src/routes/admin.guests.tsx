@@ -54,14 +54,14 @@ function AdminGuests() {
 
   const handleSubmit = (values: RecordValues) => {
     const payload = {
-      name: String(values.name),
-      nameAr: String(values.nameAr),
-      phone: String(values.phone),
-      email: String(values.email),
-      visits: Number(values.visits),
-      spend: String(values.spend),
-      tier: String(values.tier),
-      tierAr: String(values.tierAr),
+      name: String(values["name"]),
+      nameAr: String(values["nameAr"]),
+      phone: String(values["phone"]),
+      email: String(values["email"]),
+      visits: Number(values["visits"]),
+      spend: String(values["spend"]),
+      tier: String(values["tier"]),
+      tierAr: String(values["tierAr"]),
     };
     if (editing) {
       update("guests", editing.id, payload);
@@ -121,7 +121,7 @@ function AdminGuests() {
         onOpenChange={setOpen}
         title={editing ? t("Edit guest", "تعديل الضيف") : t("Add guest", "إضافة ضيف")}
         fields={FIELDS}
-        initial={editing ?? undefined}
+        {...(editing ? { initial: editing } : {})}
         onSubmit={handleSubmit}
       />
     </PanelCard>

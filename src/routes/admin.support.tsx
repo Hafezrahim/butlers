@@ -80,16 +80,16 @@ function AdminSupport() {
 
   const handleSubmit = (values: RecordValues) => {
     const payload = {
-      ref: editing?.ref ?? String(values.subject).slice(0, 6).toUpperCase(),
-      subject: String(values.subject),
-      subjectAr: String(values.subjectAr),
-      guest: String(values.guest),
-      guestAr: String(values.guestAr),
-      channel: String(values.channel),
-      channelAr: String(values.channelAr),
-      priority: String(values.priority),
-      status: String(values.status),
-      updated: String(values.updated) || new Date().toISOString().slice(0, 10),
+      ref: editing?.ref ?? String(values["subject"]).slice(0, 6).toUpperCase(),
+      subject: String(values["subject"]),
+      subjectAr: String(values["subjectAr"]),
+      guest: String(values["guest"]),
+      guestAr: String(values["guestAr"]),
+      channel: String(values["channel"]),
+      channelAr: String(values["channelAr"]),
+      priority: String(values["priority"]),
+      status: String(values["status"]),
+      updated: String(values["updated"]) || new Date().toISOString().slice(0, 10),
     };
     if (editing) {
       update("tickets", editing.id, payload);
@@ -167,7 +167,7 @@ function AdminSupport() {
         onOpenChange={setOpen}
         title={editing ? t("Edit ticket", "تعديل التذكرة") : t("New ticket", "تذكرة جديدة")}
         fields={FIELDS}
-        initial={editing ?? undefined}
+        {...(editing ? { initial: editing } : {})}
         onSubmit={handleSubmit}
       />
     </PanelCard>
