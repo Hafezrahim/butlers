@@ -178,3 +178,39 @@ export const ADMIN_POSTS = [
   { title: "Our 2026 sustainability pledge", titleAr: "تعهد الاستدامة ٢٠٢٦", category: "Company", categoryAr: "الشركة", date: "2026-07-18", status: "published" },
   { title: "Autumn menu preview", titleAr: "معاينة قائمة الخريف", category: "Culinary", categoryAr: "الطهي", date: "2026-08-06", status: "draft" },
 ];
+
+export const SITE_OPENINGS = [
+  { title: "Head Bartender", titleAr: "رئيس السقاة", dept: "Bars", deptAr: "البارات", type: "Full-time", typeAr: "دوام كامل", reqs: "4+ years in premium cocktail bars, menu development experience.", reqsAr: "خبرة لا تقل عن 4 سنوات في بارات الكوكتيل الراقية، مع خبرة في تطوير القوائم." },
+  { title: "Sous Chef", titleAr: "مساعد الشيف", dept: "Kitchen", deptAr: "المطبخ", type: "Full-time", typeAr: "دوام كامل", reqs: "Fine-dining background, strong section and stock control.", reqsAr: "خلفية في المطاعم الراقية، وقدرة قوية على إدارة الأقسام والمخزون." },
+  { title: "Restaurant Manager", titleAr: "مدير مطعم", dept: "Operations", deptAr: "العمليات", type: "Full-time", typeAr: "دوام كامل", reqs: "P&L ownership, team of 25+, guest-first mindset.", reqsAr: "مسؤولية الأرباح والخسائر، إدارة فريق يفوق 25 موظفًا، وعقلية تضع الضيف أولاً." },
+  { title: "Events Coordinator", titleAr: "منسق فعاليات", dept: "Events", deptAr: "الفعاليات", type: "Full-time", typeAr: "دوام كامل", reqs: "Production experience, supplier network, calm under pressure.", reqsAr: "خبرة في تنفيذ الفعاليات، شبكة موردين، وقدرة على العمل بهدوء تحت الضغط." },
+];
+
+export const SITE_INQUIRIES = [
+  { name: "Dina Farouk", email: "dina.farouk@email.com", phone: "+20 100 223 8899", topic: "Private event", topicAr: "فعالية خاصة", message: "Looking to host a 60-guest engagement dinner in October.", status: "new", date: "2026-08-07" },
+  { name: "Marco Bianchi", email: "marco@northline.com", phone: "+20 122 665 1200", topic: "Partnership", topicAr: "شراكة", message: "Hotel group interested in a catering partnership for Q4.", status: "in progress", date: "2026-08-05" },
+  { name: "Salma Ezz", email: "salma.ezz@email.com", phone: "+20 111 908 4477", topic: "Press", topicAr: "صحافة", message: "Feature request on the new Maison Verte opening.", status: "closed", date: "2026-08-01" },
+];
+
+export const SITE_TESTIMONIALS = [
+  { name: "Layla H.", nameAr: "ليلى ح.", text: "The most polished service in the city. Every detail felt intentional.", textAr: "أرقى خدمة في المدينة. كل تفصيلة مدروسة بعناية.", rating: 5, status: "published" },
+  { name: "Omar S.", nameAr: "عمر س.", text: "They produced our corporate gala for 400 guests flawlessly.", textAr: "نظّموا حفل شركتنا لأربعمائة ضيف بلا أي خلل.", rating: 5, status: "published" },
+  { name: "Nadia F.", nameAr: "نادية ف.", text: "Velour's cocktail programme is world class.", textAr: "قائمة مشروبات فيلور بمستوى عالمي.", rating: 4, status: "draft" },
+];
+
+export const SITE_PARTNERS = [
+  { name: "Aurum Hotels", nameAr: "فنادق أوروم", category: "Hospitality", categoryAr: "ضيافة", status: "active" },
+  { name: "Maison Lux", nameAr: "ميزون لوكس", category: "Retail", categoryAr: "تجزئة", status: "active" },
+  { name: "Northline Group", nameAr: "مجموعة نورث لاين", category: "Corporate", categoryAr: "شركات", status: "active" },
+  { name: "Caspia Resorts", nameAr: "منتجعات كاسبيا", category: "Resorts", categoryAr: "منتجعات", status: "active" },
+  { name: "Verde Events", nameAr: "فيردي للفعاليات", category: "Events", categoryAr: "فعاليات", status: "paused" },
+  { name: "Atlas Corporate", nameAr: "أطلس للشركات", category: "Corporate", categoryAr: "شركات", status: "active" },
+];
+
+export const SITE_STATS = [
+  { value: "15+", label: "Years Experience", labelAr: "سنة خبرة" },
+  { value: "20+", label: "Hospitality Brands", labelAr: "علامة ضيافة" },
+  { value: "500+", label: "Employees", labelAr: "موظف" },
+  { value: "1000+", label: "Events Delivered", labelAr: "فعالية منفذة" },
+  { value: "3M+", label: "Guests Served", labelAr: "ضيف تمت خدمته" },
+];
