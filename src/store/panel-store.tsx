@@ -7,6 +7,11 @@ import {
   ADMIN_RESERVATIONS,
   ADMIN_TICKETS,
   ADMIN_USERS,
+  SITE_INQUIRIES,
+  SITE_OPENINGS,
+  SITE_PARTNERS,
+  SITE_STATS,
+  SITE_TESTIMONIALS,
   type PanelReservation,
 } from "@/data/panel";
 import { brands as SITE_BRANDS, galleryItems as SITE_GALLERY, services as SITE_SERVICES } from "@/data/site";
