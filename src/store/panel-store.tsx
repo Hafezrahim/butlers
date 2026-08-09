@@ -22,6 +22,11 @@ export type TicketRow = { id: string; ref: string; subject: string; subjectAr: s
 export type UserRow = { id: string; name: string; nameAr: string; email: string; role: string; roleAr: string; status: string };
 export type ApplicationRow = { id: string; name: string; nameAr: string; role: string; roleAr: string; venue: string; venueAr: string; date: string; status: string };
 export type PostRow = { id: string; title: string; titleAr: string; category: string; categoryAr: string; date: string; status: string };
+export type OpeningRow = { id: string; title: string; titleAr: string; dept: string; deptAr: string; type: string; typeAr: string; reqs: string; reqsAr: string; status: string };
+export type InquiryRow = { id: string; name: string; email: string; phone: string; topic: string; topicAr: string; message: string; status: string; date: string };
+export type TestimonialRow = { id: string; name: string; nameAr: string; text: string; textAr: string; rating: number; status: string };
+export type PartnerRow = { id: string; name: string; nameAr: string; category: string; categoryAr: string; status: string };
+export type StatRow = { id: string; value: string; label: string; labelAr: string };
 export type NoteRow = { id: string; code: string; author: string; text: string; at: string };
 export type ReservationRow = WithId<PanelReservation>;
 
@@ -51,6 +56,11 @@ export type PanelData = {
   users: UserRow[];
   applications: ApplicationRow[];
   posts: PostRow[];
+  openings: OpeningRow[];
+  inquiries: InquiryRow[];
+  testimonials: TestimonialRow[];
+  partners: PartnerRow[];
+  stats: StatRow[];
   notes: NoteRow[];
   settings: SettingsRow;
 };
@@ -69,6 +79,11 @@ function seed(): PanelData {
     users: ADMIN_USERS.map((u, i) => ({ id: `user-${i}`, ...u })),
     applications: ADMIN_APPLICATIONS.map((a, i) => ({ id: `app-${i}`, ...a })),
     posts: ADMIN_POSTS.map((p, i) => ({ id: `post-${i}`, ...p })),
+    openings: SITE_OPENINGS.map((o, i) => ({ id: `opening-${i}`, ...o, status: "open" })),
+    inquiries: SITE_INQUIRIES.map((q, i) => ({ id: `inq-${i}`, ...q })),
+    testimonials: SITE_TESTIMONIALS.map((s, i) => ({ id: `testi-${i}`, ...s })),
+    partners: SITE_PARTNERS.map((p, i) => ({ id: `partner-${i}`, ...p })),
+    stats: SITE_STATS.map((s, i) => ({ id: `stat-${i}`, ...s })),
     notes: [],
     settings: {
       company: "Butlers & Co",
