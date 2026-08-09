@@ -24,6 +24,8 @@ const FIELDS: CrudField[] = [
   { key: "cuisineAr", label: "Cuisine (Arabic)", labelAr: "المطبخ (عربي)" },
   { key: "location", label: "Location", labelAr: "الموقع" },
   { key: "locationAr", label: "Location (Arabic)", labelAr: "الموقع (عربي)" },
+  { key: "tags", label: "Tags (comma separated)", labelAr: "الوسوم (مفصولة بفاصلة)", full: true },
+  { key: "tagsAr", label: "Tags Arabic (comma separated)", labelAr: "الوسوم بالعربية (مفصولة بفاصلة)", full: true },
   { key: "image", label: "Image URL", labelAr: "رابط الصورة", full: true },
   { key: "status", label: "Status", labelAr: "الحالة", type: "select", options: STATUS_OPTIONS },
 ];
@@ -53,6 +55,8 @@ function AdminBrands() {
       location: String(values['location'] ?? ""),
       locationAr: String(values['locationAr'] ?? ""),
       image: String(values['image'] ?? ""),
+      tags: String(values['tags'] ?? ""),
+      tagsAr: String(values['tagsAr'] ?? ""),
       status: String(values['status'] ?? "live"),
     };
     if (editing) {
@@ -90,6 +94,17 @@ function AdminBrands() {
                 <p className="text-xs text-muted-foreground">
                   {isAr ? b.cuisineAr : b.cuisine} · {isAr ? b.locationAr : b.location}
                 </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {(isAr ? b.tagsAr : b.tags)
+                    .split(/[,،]/)
+                    .map((tag) => tag.trim())
+                    .filter(Boolean)
+                    .map((tag) => (
+                      <span key={tag} className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                        {tag}
+                      </span>
+                    ))}
+                </div>
               </div>
               <RowActions>
                 <EditButton onClick={() => openEdit(b)} />
