@@ -137,6 +137,16 @@ function Index() {
                   <p className="text-sm text-muted-foreground">
                     {isAr ? b.cuisineAr : b.cuisine} · {isAr ? b.locationAr : b.location}
                   </p>
+                  <ul className="mt-1 flex flex-wrap gap-2">
+                    {(isAr ? b.tagsAr : b.tags).map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-border bg-muted px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-muted-foreground"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
                   <Link
                     to="/brands"
                     className="mt-2 inline-flex w-fit items-center gap-2 font-button text-xs font-semibold uppercase tracking-[0.14em] text-secondary transition-colors group-hover:text-gold"
