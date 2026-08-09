@@ -13,7 +13,7 @@ import { brands as SITE_BRANDS, galleryItems as SITE_GALLERY, services as SITE_S
 
 export type WithId<T> = T & { id: string };
 
-export type BrandRow = { id: string; name: string; nameAr: string; cuisine: string; cuisineAr: string; location: string; locationAr: string; image: string; status: string };
+export type BrandRow = { id: string; name: string; nameAr: string; cuisine: string; cuisineAr: string; location: string; locationAr: string; image: string; tags: string; tagsAr: string; status: string };
 export type ServiceRow = { id: string; slug: string; name: string; nameAr: string; desc: string; descAr: string; status: string };
 export type GalleryRow = { id: string; src: string; category: string; categoryAr: string; alt: string; altAr: string };
 export type EventRow = { id: string; title: string; titleAr: string; date: string; venue: string; venueAr: string; seats: number; booked: number; status: string };
@@ -60,7 +60,7 @@ export const uid = () => Math.random().toString(36).slice(2, 10);
 function seed(): PanelData {
   return {
     reservations: ADMIN_RESERVATIONS.map((r) => ({ ...r, id: r.code })),
-    brands: SITE_BRANDS.map((b, i) => ({ id: `brand-${i}`, name: b.name, nameAr: b.nameAr, cuisine: b.cuisine, cuisineAr: b.cuisineAr, location: b.location, locationAr: b.locationAr, image: b.image as unknown as string, status: "live" })),
+    brands: SITE_BRANDS.map((b, i) => ({ id: `brand-${i}`, name: b.name, nameAr: b.nameAr, cuisine: b.cuisine, cuisineAr: b.cuisineAr, location: b.location, locationAr: b.locationAr, image: b.image as unknown as string, tags: b.tags.join(", "), tagsAr: b.tagsAr.join("، "), status: "live" })),
     services: SITE_SERVICES.map((s) => ({ id: s.slug, slug: s.slug, name: s.name, nameAr: s.nameAr, desc: s.desc, descAr: s.descAr, status: "live" })),
     gallery: SITE_GALLERY.map((g, i) => ({ id: `media-${i}`, src: g.src as unknown as string, category: g.category, categoryAr: g.categoryAr, alt: g.alt, altAr: g.altAr })),
     events: ADMIN_EVENTS.map((e, i) => ({ id: `event-${i}`, ...e })),
