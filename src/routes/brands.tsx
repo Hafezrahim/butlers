@@ -53,6 +53,13 @@ function Brands() {
                   <li className="flex items-center gap-2"><MapPin className="size-4 text-secondary" /> {isAr ? b.locationAr : b.location}</li>
                   <li className="flex items-center gap-2"><Clock className="size-4 text-secondary" /> {t("Daily · 12:00 — 01:00", "يوميًا · 12:00 — 01:00")}</li>
                 </ul>
+                <ul className="flex flex-wrap gap-2">
+                  {(isAr ? b.tagsAr : b.tags).map((tag) => (
+                    <li key={tag} className="rounded-full border border-border bg-muted px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
                 <div className="aspect-[16/7] w-full overflow-hidden rounded-xl bg-muted">
                   <iframe
                     title={`Map of ${b.name}`}
