@@ -33,10 +33,15 @@ import { Route as AdminCareersRouteImport } from './routes/admin.careers'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
 import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
 import { Route as AdminGuestsRouteImport } from './routes/admin.guests'
+import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 import { Route as AdminNewsRouteImport } from './routes/admin.news'
+import { Route as AdminOpeningsRouteImport } from './routes/admin.openings'
+import { Route as AdminPartnersRouteImport } from './routes/admin.partners'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminStatsRouteImport } from './routes/admin.stats'
 import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonials'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReservationsIndexRouteImport } from './routes/admin.reservations.index'
 import { Route as AdminReservationsCodeRouteImport } from './routes/admin.reservations.$code'
@@ -161,9 +166,24 @@ const AdminGuestsRoute = AdminGuestsRouteImport.update({
   path: '/guests',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
+  id: '/inquiries',
+  path: '/inquiries',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNewsRoute = AdminNewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOpeningsRoute = AdminOpeningsRouteImport.update({
+  id: '/openings',
+  path: '/openings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPartnersRoute = AdminPartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminServicesRoute = AdminServicesRouteImport.update({
@@ -176,9 +196,19 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminStatsRoute = AdminStatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSupportRoute = AdminSupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
@@ -220,10 +250,15 @@ export interface FileRoutesByFullPath {
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/openings': typeof AdminOpeningsRoute
+  '/admin/partners': typeof AdminPartnersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/support': typeof AdminSupportRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -251,10 +286,15 @@ export interface FileRoutesByTo {
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/openings': typeof AdminOpeningsRoute
+  '/admin/partners': typeof AdminPartnersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/support': typeof AdminSupportRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/users': typeof AdminUsersRoute
   '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
@@ -285,10 +325,15 @@ export interface FileRoutesById {
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/guests': typeof AdminGuestsRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/openings': typeof AdminOpeningsRoute
+  '/admin/partners': typeof AdminPartnersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/support': typeof AdminSupportRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/users': typeof AdminUsersRoute
   '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -320,10 +365,15 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/inquiries'
     | '/admin/news'
+    | '/admin/openings'
+    | '/admin/partners'
     | '/admin/services'
     | '/admin/settings'
+    | '/admin/stats'
     | '/admin/support'
+    | '/admin/testimonials'
     | '/admin/users'
     | '/account/'
     | '/admin/'
@@ -351,10 +401,15 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/inquiries'
     | '/admin/news'
+    | '/admin/openings'
+    | '/admin/partners'
     | '/admin/services'
     | '/admin/settings'
+    | '/admin/stats'
     | '/admin/support'
+    | '/admin/testimonials'
     | '/admin/users'
     | '/account'
     | '/admin'
@@ -384,10 +439,15 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/gallery'
     | '/admin/guests'
+    | '/admin/inquiries'
     | '/admin/news'
+    | '/admin/openings'
+    | '/admin/partners'
     | '/admin/services'
     | '/admin/settings'
+    | '/admin/stats'
     | '/admin/support'
+    | '/admin/testimonials'
     | '/admin/users'
     | '/account/'
     | '/admin/'
@@ -582,11 +642,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGuestsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/inquiries': {
+      id: '/admin/inquiries'
+      path: '/inquiries'
+      fullPath: '/admin/inquiries'
+      preLoaderRoute: typeof AdminInquiriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/news': {
       id: '/admin/news'
       path: '/news'
       fullPath: '/admin/news'
       preLoaderRoute: typeof AdminNewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/openings': {
+      id: '/admin/openings'
+      path: '/openings'
+      fullPath: '/admin/openings'
+      preLoaderRoute: typeof AdminOpeningsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/partners': {
+      id: '/admin/partners'
+      path: '/partners'
+      fullPath: '/admin/partners'
+      preLoaderRoute: typeof AdminPartnersRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/services': {
@@ -603,11 +684,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/stats': {
+      id: '/admin/stats'
+      path: '/stats'
+      fullPath: '/admin/stats'
+      preLoaderRoute: typeof AdminStatsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/support': {
       id: '/admin/support'
       path: '/support'
       fullPath: '/admin/support'
       preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/users': {
@@ -657,10 +752,15 @@ interface AdminRouteChildren {
   AdminEventsRoute: typeof AdminEventsRoute
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminGuestsRoute: typeof AdminGuestsRoute
+  AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminNewsRoute: typeof AdminNewsRoute
+  AdminOpeningsRoute: typeof AdminOpeningsRoute
+  AdminPartnersRoute: typeof AdminPartnersRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminStatsRoute: typeof AdminStatsRoute
   AdminSupportRoute: typeof AdminSupportRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminReservationsCodeRoute: typeof AdminReservationsCodeRoute
@@ -673,10 +773,15 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEventsRoute: AdminEventsRoute,
   AdminGalleryRoute: AdminGalleryRoute,
   AdminGuestsRoute: AdminGuestsRoute,
+  AdminInquiriesRoute: AdminInquiriesRoute,
   AdminNewsRoute: AdminNewsRoute,
+  AdminOpeningsRoute: AdminOpeningsRoute,
+  AdminPartnersRoute: AdminPartnersRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminStatsRoute: AdminStatsRoute,
   AdminSupportRoute: AdminSupportRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminReservationsCodeRoute: AdminReservationsCodeRoute,
