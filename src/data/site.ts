@@ -19,10 +19,14 @@ export const services = [
 ];
 
 export const brands = [
-  { name: "The Butler Room", nameAr: "ذا باتلر روم", cuisine: "Modern European", cuisineAr: "أوروبي معاصر", location: "Downtown", locationAr: "وسط البلد", image: hero },
-  { name: "Velour", nameAr: "فيلور", cuisine: "Cocktail Lounge", cuisineAr: "صالة مشروبات", location: "Riverside", locationAr: "كورنيش النيل", image: cocktails },
-  { name: "Noir Club", nameAr: "نوار كلوب", cuisine: "Nightlife", cuisineAr: "حياة ليلية", location: "Marina Walk", locationAr: "ممشى المارينا", image: nightlife },
-  { name: "Maison Verte", nameAr: "ميزون فيرت", cuisine: "Contemporary Levantine", cuisineAr: "شامي معاصر", location: "Garden City", locationAr: "جاردن سيتي", image: food },
+  { name: "The Butler Room", nameAr: "ذا باتلر روم", cuisine: "Modern European", cuisineAr: "أوروبي معاصر", location: "Downtown", locationAr: "وسط البلد", image: hero, tags: ["Fine Dining", "Tasting Menu", "Wine Cellar", "Valet"], tagsAr: ["طعام راقٍ", "قائمة تذوق", "قبو نبيذ", "خدمة صف السيارات"] },
+  { name: "Velour", nameAr: "فيلور", cuisine: "Cocktail Lounge", cuisineAr: "صالة مشروبات", location: "Riverside", locationAr: "كورنيش النيل", image: cocktails, tags: ["Mixology", "Live Jazz", "Rooftop", "Late Night"], tagsAr: ["فن المشروبات", "جاز حي", "سطح مفتوح", "سهر متأخر"] },
+  { name: "Noir Club", nameAr: "نوار كلوب", cuisine: "Nightlife", cuisineAr: "حياة ليلية", location: "Marina Walk", locationAr: "ممشى المارينا", image: nightlife, tags: ["Nightlife", "Guest DJs", "Bottle Service", "VIP Tables"], tagsAr: ["حياة ليلية", "منسقو أغانٍ", "خدمة الزجاجات", "طاولات كبار الزوار"] },
+  { name: "Maison Verte", nameAr: "ميزون فيرت", cuisine: "Contemporary Levantine", cuisineAr: "شامي معاصر", location: "Garden City", locationAr: "جاردن سيتي", image: food, tags: ["Levantine", "Garden Terrace", "Family Friendly", "Brunch"], tagsAr: ["مطبخ شامي", "تراس حديقة", "مناسب للعائلات", "برانش"] },
+  { name: "Ember & Oak", nameAr: "إمبر آند أوك", cuisine: "Charcoal Grill & Steak", cuisineAr: "مشويات وستيك", location: "Sheikh Zayed", locationAr: "الشيخ زايد", image: food, tags: ["Steakhouse", "Open Fire", "Dry-Aged Beef", "Private Room"], tagsAr: ["ستيك هاوس", "شواء مكشوف", "لحوم معتقة", "غرفة خاصة"] },
+  { name: "Aria Rooftop", nameAr: "أريا روفتوب", cuisine: "Mediterranean Rooftop", cuisineAr: "متوسطي على السطح", location: "New Cairo", locationAr: "القاهرة الجديدة", image: nightlife, tags: ["Skyline Views", "Sunset Hour", "Shisha", "Live Sets"], tagsAr: ["إطلالة بانورامية", "ساعة الغروب", "شيشة", "عروض حية"] },
+  { name: "Butlers Garden", nameAr: "حديقة بتلرز", cuisine: "All-Day Dining & Events", cuisineAr: "مطعم يومي وفعاليات", location: "Zamalek", locationAr: "الزمالك", image: events, tags: ["Events Venue", "Weddings", "Catering", "Outdoor"], tagsAr: ["قاعة فعاليات", "أفراح", "ضيافة", "في الهواء الطلق"] },
+  { name: "Cellar 27", nameAr: "سيلار ٢٧", cuisine: "Wine Bar & Small Plates", cuisineAr: "بار نبيذ وأطباق صغيرة", location: "Maadi", locationAr: "المعادي", image: cocktails, tags: ["Wine Bar", "Small Plates", "Cheese Board", "Intimate"], tagsAr: ["بار نبيذ", "أطباق صغيرة", "أطباق أجبان", "أجواء حميمة"] },
 ];
 
 export const stats = [
